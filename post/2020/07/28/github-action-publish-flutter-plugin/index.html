@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="https://cdn.pixabay.com/photo/2020/04/06/13/37/coffee-5009730_960_720.png" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">使用 Github Action 发布 Flutter 插件</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;1
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>笔者有发布过几个 Flutter 插件，一直在手动更新。手动更新插件有点麻烦且容易失败（需要科学上网），因此研究了下如何使用 <a href="https://help.github.com/en/actions" target="_blank" rel="noopener">Github Actions</a>（Github 提供的一种 CI/CD 服务）自动发布插件到 pub.dev，这样做的好处有</p>
+<ol>
+<li>避免手动发布，节约上传时间</li>
+<li>在 Github 合并别人提交的代码后也可以立即发布</li>
+</ol>
+<p>以下说明如何进行</p>
+<h2 id="添加流程"><a href="#添加流程" class="headerlink" title="添加流程"></a>添加流程</h2><p>首先在插件的 <code>.github/workflows</code> 目录内创建一个配置文件 <code>publish.yml</code>。</p>
+<p><img src="./images/github-action-publish-flutter-plugin/publish.png" alt="publish"></p>
+<p>内容如下</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Publish</span> <span class="string">to</span> <span class="string">Pub.dev</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 流程触发时机，当有标签创建时触发，如 v1.0.0。当然也可以选择别的触发时机，如 push，release 等</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">create</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">publishing:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="comment"># 拉取仓库代码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"Checkout"</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="comment"># 发布插件</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Dart</span> <span class="string">and</span> <span class="string">Flutter</span> <span class="string">Package</span> <span class="string">Publisher</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">k-paxian/dart-package-publisher@v1.2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="comment"># 设置发布插件需要的 Token</span></span><br><span class="line">          <span class="attr">accessToken:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.OAUTH_ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">refreshToken:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.OAUTH_REFRESH_TOKEN</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>流程中需要设置 <code>OAUTH_ACCESS_TOKEN</code> 和 <code>OAUTH_REFRESH_TOKEN</code> 这两个 Token，他们在 <code>.pub-cache/credentials.json</code> 的文件内，这个文件是第一次手动发布插件成功后自动生成的，在用户的 home 目录或者是安装 Flutter SDK 目录内。</p>
+<p><img src="./images/github-action-publish-flutter-plugin/credentials.png" alt="credentials"></p>
+<p>拿到 Token 后去插件仓库添加以上两个 Secret，至此配置工作已完成 🎉</p>
+<p><img src="./images/github-action-publish-flutter-plugin/secrets.png" alt="secrets"></p>
+<h2 id="发布插件"><a href="#发布插件" class="headerlink" title="发布插件"></a>发布插件</h2><p>现在每次更新插件只需要新增标签然后推送到仓库，就可以自动更新插件啦！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag v1.0.1</span><br><span class="line"></span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/github-action-publish-flutter-plugin/action.png" alt="action"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/marketplace/actions/dart-and-flutter-package-publisher" target="_blank" rel="noopener">Dart and Flutter Package Publisher</a></p>
+<p>第一次发布插件看这里 <a href="https://flutter.cn/docs/development/packages-and-plugins/developing-packages" target="_blank" rel="noopener">Publishing your package</a></p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2020/08/31/ali-interview-questions/"
+      title="阿里的三道面试题"
+    >
+      &larr;&nbsp;阿里的三道面试题
+    </a>
+     
+    <a
+      class=""
+      href="/post/2020/07/14/flutter-generative-artistry-02/"
+      title="Flutter 绘制三角网格 Triangular Mesh"
+    >
+      Flutter 绘制三角网格 Triangular Mesh&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

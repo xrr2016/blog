@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><ul class="post-list">
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Context 避免深层属性传递"
+      href="/post/2021/07/29/react-context-hooks/"
+    >
+      <img
+        class="post-cover"
+        src="./images/react-context-hooks/cover.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Context 避免深层属性传递</h2>
+        <sub class="post-excerpt"><p>最近在项目发现了一些看起来很神奇的代码，一个组件 A 的方法通过 <code>props</code> 传到组件 B，然后到组件 C，再到组件 D，再到组件 E，最后到组件 D， 简直是千层饼😂。</p></sub>
+        <span class="post-date">
+          <time datetime="2021-07-29"
+            >2021-07-29</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="React">React</span>
+              
+              <span class="post-tag" title="Web">Web</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="学习抽象语法树 AST"
+      href="/post/2021/04/26/learn-ast/"
+    >
+      <img
+        class="post-cover"
+        src="./images/learn-ast/ast-cover.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">学习抽象语法树 AST</h2>
+        <sub class="post-excerpt"><p>作为一个前端切图仔，工作中少不了用上 Babel，ESLint，Prettier 这些工具，但是这些工具背后的工作原理却不求甚解😅 </p></sub>
+        <span class="post-date">
+          <time datetime="2021-04-26"
+            >2021-04-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Babel">Babel</span>
+              
+              <span class="post-tag" title="AST">AST</span>
+              
+              <span class="post-tag" title="ESLint">ESLint</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="JS 检查元素是否在视口内"
+      href="/post/2021/04/13/js-check-element/"
+    >
+      <img
+        class="post-cover"
+        src="./images/js-check-element/cover.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">JS 检查元素是否在视口内</h2>
+        <sub class="post-excerpt"><p>分享两个监测元素是否在视口内的方法</p></sub>
+        <span class="post-date">
+          <time datetime="2021-04-13"
+            >2021-04-13</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="WEB">WEB</span>
+              
+              <span class="post-tag" title="JS">JS</span>
+              
+              <span class="post-tag" title="Viewport">Viewport</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="JS 文件转换"
+      href="/post/2021/04/01/js-file-transform/"
+    >
+      <img
+        class="post-cover"
+        src="./images/js-file-transform/cover.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">JS 文件转换</h2>
+        <sub class="post-excerpt"><p>最近需要将 base64 格式的图片转化成 JS 里的 File 对象进行上传，于是学习了一下这方面的知识</p></sub>
+        <span class="post-date">
+          <time datetime="2021-04-01"
+            >2021-04-01</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="WEB">WEB</span>
+              
+              <span class="post-tag" title="File">File</span>
+              
+              <span class="post-tag" title="Blob">Blob</span>
+              
+              <span class="post-tag" title="Base64">Base64</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="画一颗圣诞树🎄"
+      href="/post/2020/12/23/christmas-tree/"
+    >
+      <img
+        class="post-cover"
+        src="./images/christmas-tree/tree.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">画一颗圣诞树🎄</h2>
+        <sub class="post-excerpt"><p>JUST FOR FUN</p></sub>
+        <span class="post-date">
+          <time datetime="2020-12-23"
+            >2020-12-23</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Canvas">Canvas</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Slate 介绍分析与实践"
+      href="/post/2020/12/13/slate-intro/"
+    >
+      <img
+        class="post-cover"
+        src="./images/slate-intro/cover.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Slate 介绍分析与实践</h2>
+        <sub class="post-excerpt"><p>Slate 是一个使用 TypeScript 开发富文本编辑器开发框架，诞生于 2016 年。</p></sub>
+        <span class="post-date">
+          <time datetime="2020-12-13"
+            >2020-12-13</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Web">Web</span>
+              
+              <span class="post-tag" title="Rich Editor">Rich Editor</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="认识 Range 和 Selection 对象"
+      href="/post/2020/12/05/selection-and-range/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/04/19/16/09/white-flowers-6191822_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">认识 Range 和 Selection 对象</h2>
+        <sub class="post-excerpt"><p>浏览器的 Range 和 Selection 对象</p></sub>
+        <span class="post-date">
+          <time datetime="2020-12-05"
+            >2020-12-05</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Web">Web</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="什么是 peerDependencies"
+      href="/post/2020/11/29/npm-peerDependencies/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/11/26/07/38/rough-collie-5778136_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">什么是 peerDependencies</h2>
+        <sub class="post-excerpt"><p><code>package.json</code> 里面的 <code>peerDependencies</code> 是什么意思</p></sub>
+        <span class="post-date">
+          <time datetime="2020-11-29"
+            >2020-11-29</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="npm">npm</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="学习观察者模式"
+      href="/post/2020/10/20/design-patterns-observer/"
+    >
+      <img
+        class="post-cover"
+        src="./images/design-patterns-observer/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">学习观察者模式</h2>
+        <sub class="post-excerpt"><p>观察者模式是一种行为设计模式，允许你定义一种订阅机制，可在对象事件发生时通知多个 “观察” 该对象的对象。</p></sub>
+        <span class="post-date">
+          <time datetime="2020-10-20"
+            >2020-10-20</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Design Patterns">Design Patterns</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 绘制图形 Circle Packing"
+      href="/post/2020/09/17/flutter-generative-artistry-03/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-generative-artistry-03/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 绘制图形 Circle Packing</h2>
+        <sub class="post-excerpt"><p>本文讲解使用 Flutter 实现 Generative Artistry 教程里面的第六个图形 Circle Packing（圆形填充）</p></sub>
+        <span class="post-date">
+          <time datetime="2020-09-17"
+            >2020-09-17</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Generative artistry">Generative artistry</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="阿里的三道面试题"
+      href="/post/2020/08/31/ali-interview-questions/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/04/27/15/04/wagtail-6211745_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">阿里的三道面试题</h2>
+        <sub class="post-excerpt"><p>前段时间做了三道阿里的在线面试题，分享一下</p></sub>
+        <span class="post-date">
+          <time datetime="2020-08-31"
+            >2020-08-31</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Interview">Interview</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Github Action 发布 Flutter 插件"
+      href="/post/2020/07/28/github-action-publish-flutter-plugin/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/04/06/13/37/coffee-5009730_960_720.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Github Action 发布 Flutter 插件</h2>
+        <sub class="post-excerpt"><p>本文说明如何使用 Github Actions 自动发布 Flutter 插件到 pub.dev</p></sub>
+        <span class="post-date">
+          <time datetime="2020-07-28"
+            >2020-07-28</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Github">Github</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 绘制三角网格 Triangular Mesh"
+      href="/post/2020/07/14/flutter-generative-artistry-02/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-generative-artistry-02/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 绘制三角网格 Triangular Mesh</h2>
+        <sub class="post-excerpt"><p>本文实现 Generative Artistry 教程的第 4 篇图形 Triangular mesh 效果如下</p></sub>
+        <span class="post-date">
+          <time datetime="2020-07-14"
+            >2020-07-14</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Generative artistry">Generative artistry</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 绘制瓷砖线 Tiled Lines"
+      href="/post/2020/07/07/flutter-generative-artistry-01/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-generative-artistry-01/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 绘制瓷砖线 Tiled Lines</h2>
+        <sub class="post-excerpt"><p>前几天发现了一个使用 <code>&lt;canvas&gt;</code> 绘制图形的教程 generative artistry 感觉很有意思，尝试用 Flutter 实现。本文实现第一篇教程的图形 Tiled Lines 效果如下。</p></sub>
+        <span class="post-date">
+          <time datetime="2020-07-07"
+            >2020-07-07</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Generative artistry">Generative artistry</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="用 Flutter 实现探探卡片布局"
+      href="/post/2020/06/18/flutter-tinder-card/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-tinder-card/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">用 Flutter 实现探探卡片布局</h2>
+        <sub class="post-excerpt"><p>前几天写了一个 Fluter 插件 tcard，用来实现类似于探探卡片的布局。</p></sub>
+        <span class="post-date">
+          <time datetime="2020-06-18"
+            >2020-06-18</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="最好的你"
+      href="/post/2020/06/17/leetcode-1014/"
+    >
+      <img
+        class="post-cover"
+        src="./images/best_of_you.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">最好的你</h2>
+        <sub class="post-excerpt"><p>LeetCode 1014 最佳观光组合</p></sub>
+        <span class="post-date">
+          <time datetime="2020-06-17"
+            >2020-06-17</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="leetcode">leetcode</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 绘制图表（二）饼状图🍪"
+      href="/post/2020/06/09/flutter-pie-chart/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-pie-chart/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 绘制图表（二）饼状图🍪</h2>
+        <sub class="post-excerpt"><p>本文讲解如何使用 Flutter 绘制饼状图</p></sub>
+        <span class="post-date">
+          <time datetime="2020-06-09"
+            >2020-06-09</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 绘制图表（一）柱状图📊"
+      href="/post/2020/05/31/flutter-bar-chart/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-bar-chart/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 绘制图表（一）柱状图📊</h2>
+        <sub class="post-excerpt"><p>本文讲解如何使用 Flutter 绘制一个带有动画效果的柱状图表</p></sub>
+        <span class="post-date">
+          <time datetime="2020-05-31"
+            >2020-05-31</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="选择适合的 Flutter 动画控件"
+      href="/post/2020/05/07/flutter-animation-decision/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-animation-decision/level.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">选择适合的 Flutter 动画控件</h2>
+        <sub class="post-excerpt"><p>如何在 Flutter 中选择合适的动画 Widget 中文翻译</p></sub>
+        <span class="post-date">
+          <time datetime="2020-05-07"
+            >2020-05-07</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Animation">Animation</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="从零开始的 Flutter 动画"
+      href="/post/2020/04/26/flutter-animation-from-zero/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-animation-from-zero/cover.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">从零开始的 Flutter 动画</h2>
+        <sub class="post-excerpt"><p>Flutter 中的动画</p></sub>
+        <span class="post-date">
+          <time datetime="2020-04-26"
+            >2020-04-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Animation">Animation</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="在 Flutter 里使用 Stream"
+      href="/post/2020/04/13/flutter-stream/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-stream/stream.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">在 Flutter 里使用 Stream</h2>
+        <sub class="post-excerpt"><p>在 Flutter 中有两种处理异步操作的方式 <code>Future</code> 和 <code>Stream</code>，<code>Future</code> 用于处理单个异步操作，<code>Stream</code> 用来处理连续的异步操作</p></sub>
+        <span class="post-date">
+          <time datetime="2020-04-13"
+            >2020-04-13</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 是如何渲染的？"
+      href="/post/2020/04/03/how-flutter-render/"
+    >
+      <img
+        class="post-cover"
+        src="./images/how-flutter-render/cover.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 是如何渲染的？</h2>
+        <sub class="post-excerpt"><p>总结一下关于 Flutter 渲染方面的知识</p></sub>
+        <span class="post-date">
+          <time datetime="2020-04-03"
+            >2020-04-03</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="PlantUML 类图及 Flowchart 流程图绘制入门"
+      href="/post/2020/03/26/learn-classchart-flowchart/"
+    >
+      <img
+        class="post-cover"
+        src="./images/draw.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">PlantUML 类图及 Flowchart 流程图绘制入门</h2>
+        <sub class="post-excerpt"><p>学习 <code>PlantUML</code></p></sub>
+        <span class="post-date">
+          <time datetime="2020-03-26"
+            >2020-03-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="PlantUML">PlantUML</span>
+              
+              <span class="post-tag" title="Flowchart">Flowchart</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="记录两个使用 Flutter 的 DropdownButton 问题"
+      href="/post/2020/03/24/flutter-dropdown-problem/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/06/15/09/30/butterfly-5301066_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">记录两个使用 Flutter 的 DropdownButton 问题</h2>
+        <sub class="post-excerpt"><p>记录两个关于 <code>DropdownButton</code> 的问题</p></sub>
+        <span class="post-date">
+          <time datetime="2020-03-24"
+            >2020-03-24</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之二叉树"
+      href="/post/2020/03/15/das-tree/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/06/21/02/31/wine-5323009_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之二叉树</h2>
+        <sub class="post-excerpt"><p>二叉树是一种非线性的数据结构，以分层的方式存储数据。在二叉树上进行添加，查找和删除数据非常快。</p></sub>
+        <span class="post-date">
+          <time datetime="2020-03-15"
+            >2020-03-15</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="如何使用 Gitlib 持续发布 Flutter 应用"
+      href="/post/2020/02/27/flutter-gitlab-pineline/"
+    >
+      <img
+        class="post-cover"
+        src="./images/samuel-chenard.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">如何使用 Gitlib 持续发布 Flutter 应用</h2>
+        <sub class="post-excerpt"><p>本文介绍如何使用 Gitlib CI/CD 构建发布 Flutter 应用</p></sub>
+        <span class="post-date">
+          <time datetime="2020-02-27"
+            >2020-02-27</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Gitlib">Gitlib</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Github Actions 持续发布 Flutter 应用"
+      href="/post/2020/02/26/flutter-github-actions/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-action-sm.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Github Actions 持续发布 Flutter 应用</h2>
+        <sub class="post-excerpt"><p>本文讲解如何使用 Github Actions 构建并发布 Flutter 应用</p></sub>
+        <span class="post-date">
+          <time datetime="2020-02-26"
+            >2020-02-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Github Actions">Github Actions</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="MySQL 入门笔记 📒"
+      href="/post/2020/02/12/mysql-getting-start/"
+    >
+      <img
+        class="post-cover"
+        src="https://images.unsplash.com/photo-1489875347897-49f64b51c1f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">MySQL 入门笔记 📒</h2>
+        <sub class="post-excerpt"><p>工作需求学习一下 MySQL 数据库</p></sub>
+        <span class="post-date">
+          <time datetime="2020-02-12"
+            >2020-02-12</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="MySQL">MySQL</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Codemagic 持续部署 Flutter 应用"
+      href="/post/2020/02/03/flutter-cicd/"
+    >
+      <img
+        class="post-cover"
+        src="./images/flutter-cicd/cicd.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Codemagic 持续部署 Flutter 应用</h2>
+        <sub class="post-excerpt"><p>Codemagic 持续部署 Flutter 应用</p></sub>
+        <span class="post-date">
+          <time datetime="2020-02-03"
+            >2020-02-03</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+              <span class="post-tag" title="Codemagic">Codemagic</span>
+              
+              <span class="post-tag" title="Google Play">Google Play</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="为 Flutter 应用添加搜索功能"
+      href="/post/2020/01/26/flutter-show-search/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/01/21/15/54/books-5937716_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">为 Flutter 应用添加搜索功能</h2>
+        <sub class="post-excerpt"><p>使用 <code>SearchDelegate</code> 给 Flutter 应用添加搜索功能</p></sub>
+        <span class="post-date">
+          <time datetime="2020-01-26"
+            >2020-01-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Flutter 创建自定义路由过渡动画"
+      href="/post/2019/12/10/flutter-route-transition/"
+    >
+      <img
+        class="post-cover"
+        src="./images/transition.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Flutter 创建自定义路由过渡动画</h2>
+        <sub class="post-excerpt"><p>Flutter 应用进行路由跳转的时候有默认的过渡动画，但是自定义的跳转动画会让应用更具特色</p></sub>
+        <span class="post-date">
+          <time datetime="2019-12-10"
+            >2019-12-10</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Egg.js 上传接口开发总结"
+      href="/post/2019/12/05/egg-api-dev/"
+    >
+      <img
+        class="post-cover"
+        src="./images/egg.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Egg.js 上传接口开发总结</h2>
+        <sub class="post-excerpt"><p>总结一下之前用 Egg.js 开发的文件上传接口的任务</p></sub>
+        <span class="post-date">
+          <time datetime="2019-12-05"
+            >2019-12-05</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Node">Node</span>
+              
+              <span class="post-tag" title="Egg.js">Egg.js</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Flutter 实现一个走马灯布局"
+      href="/post/2019/11/20/flutter-carousel/"
+    >
+      <img
+        class="post-cover"
+        src="./images/carousel.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Flutter 实现一个走马灯布局</h2>
+        <sub class="post-excerpt"><p>走马灯是一种常见的效果，本文讲一下如何用 <code>PageView</code> 在 <code>Flutter</code> 里实现一个走马灯</p></sub>
+        <span class="post-date">
+          <time datetime="2019-11-20"
+            >2019-11-20</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="分享两道面试题"
+      href="/post/2019/11/15/two-interview-question/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/04/13/22/55/sugar-5040276_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">分享两道面试题</h2>
+        <sub class="post-excerpt"><p>前几天遇到两个前端面试题，要写代码的那种，然后我都没做对…记录一下</p></sub>
+        <span class="post-date">
+          <time datetime="2019-11-15"
+            >2019-11-15</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Interview">Interview</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 FFmpeg 转换视频格式"
+      href="/post/2019/11/11/simple-use-ffmpeg/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/02/21/14/37/little-bird-6036530_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 FFmpeg 转换视频格式</h2>
+        <sub class="post-excerpt"><p>用 B 站下载助手 下载下来的视频格式是 <code>flv</code>，用 QuickTime 看不了也不能导入 iMovie 进行编辑，所以需要转换一下视频格式</p></sub>
+        <span class="post-date">
+          <time datetime="2019-11-11"
+            >2019-11-11</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="FFmpeg">FFmpeg</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="对 Egg.js 进行单元测试"
+      href="/post/2019/11/01/eggjs-test/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/06/13/16/bee-6233397_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">对 Egg.js 进行单元测试</h2>
+        <sub class="post-excerpt"><p>优秀的代码需要有单元测试进行质量保证，每个测试用例都给应用的稳定性提供了一层保障，本文说一下如何对使用 egg.js 写的接口进行单元测试</p></sub>
+        <span class="post-date">
+          <time datetime="2019-11-01"
+            >2019-11-01</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Node">Node</span>
+              
+              <span class="post-tag" title="Egg">Egg</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Docker ARG vs ENV"
+      href="/post/2019/10/25/docker-arg-vs-env/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/14/08/44/running-6252827_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Docker ARG vs ENV</h2>
+        <sub class="post-excerpt"><p>构建 Docker 镜像的的时候有两种环境变量 <code>ARG</code> 和 <code>ENV</code>, 一种是在运行 build 命令时通过 <code>--build-arg</code> 参数设置的 build-time variables 以及通过在 <code>dockerfile</code> 里面设置 <code>ENV</code> 指令配置的环境变量。</p></sub>
+        <span class="post-date">
+          <time datetime="2019-10-25"
+            >2019-10-25</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Docker">Docker</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="前端代码规范"
+      href="/post/2019/10/10/code-standard/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/02/05/22/37/seagulls-4822595_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">前端代码规范</h2>
+        <sub class="post-excerpt"><p>良好的代码规范有利于提高项目开发效率以及减少阅读代码的困难，本规范结合了(chaoxi)多个流行的代码规范以及前人的开发经验而成，参考规范进行开发提高代码质量</p></sub>
+        <span class="post-date">
+          <time datetime="2019-10-10"
+            >2019-10-10</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Standard">Standard</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Intl 对象进行日期时间格式化"
+      href="/post/2019/10/05/js-intl/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/05/27/11/01/leaves-5226759_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Intl 对象进行日期时间格式化</h2>
+        <sub class="post-excerpt"><p>本文主要说明如何使用浏览器自带的 Intl 对象进行日期时间的格式化</p></sub>
+        <span class="post-date">
+          <time datetime="2019-10-05"
+            >2019-10-05</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="JS">JS</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之集合"
+      href="/post/2019/10/01/dsa-set/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/11/26/20/20/barn-owl-5780100_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之集合</h2>
+        <sub class="post-excerpt"><p>集合是一种包含不同元素的数据结构，集合中的元素称之为成员。集合有两个重要的特性，一是集合中的成员是无序的，其次集合中不存在相同的成员。</p></sub>
+        <span class="post-date">
+          <time datetime="2019-10-01"
+            >2019-10-01</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Provider 管理 Flutter 应用状态 (下)"
+      href="/post/2019/09/23/flutter-provider-todos-02/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/15/19/25/greylag-geese-6256503_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Provider 管理 Flutter 应用状态 (下)</h2>
+        <sub class="post-excerpt"><p>为了存储数据可以将数据存到手机的存储里面或者存到远程服务器上，本文就实现如何使用 dio 将数据存到服务器</p></sub>
+        <span class="post-date">
+          <time datetime="2019-09-23"
+            >2019-09-23</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Provider 管理 Flutter 应用状态 (上)"
+      href="/post/2019/09/11/flutter-provider-todos-01/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/13/17/49/dog-6251469_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Provider 管理 Flutter 应用状态 (上)</h2>
+        <sub class="post-excerpt"><p>本文说明如何使用 Provider 来管理这种应用的全局性的数据</p></sub>
+        <span class="post-date">
+          <time datetime="2019-09-11"
+            >2019-09-11</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之哈希表"
+      href="/post/2019/09/08/dsa-hash/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/13/12/34/peony-6250764_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之哈希表</h2>
+        <sub class="post-excerpt"><p>哈希表是一种常用的数据结构，可以快速的插入和取用，但是查询数据效率低下</p></sub>
+        <span class="post-date">
+          <time datetime="2019-09-08"
+            >2019-09-08</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="在 Egg.js 中使用 Redis 缓存提升性能"
+      href="/post/2019/08/31/egg-redis-cache/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">在 Egg.js 中使用 Redis 缓存提升性能</h2>
+        <sub class="post-excerpt"><p>Redis 是一款开源的，基于 BSD 许可的，高级键值缓存和存储系统</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-31"
+            >2019-08-31</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Node">Node</span>
+              
+              <span class="post-tag" title="Redis">Redis</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之字典"
+      href="/post/2019/08/28/dsa-dictionary/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2014/04/14/20/11/pink-324175_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之字典</h2>
+        <sub class="post-excerpt"><p>字典是一种以键值对形式存储数据的数据结构，键用来查找，值用来保存数据</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-28"
+            >2019-08-28</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之链表"
+      href="/post/2019/08/25/dsa-linklist/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之链表</h2>
+        <sub class="post-excerpt"><p>链表是一组节点组成的集合，每个节点都使用一个对象的引用指向它的下一个节点，指向节点的引用叫做链</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-25"
+            >2019-08-25</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="如何在 Egg.js 中使用 Sequelize 的事务 Transaction"
+      href="/post/2019/08/22/egg-sequelize-transaction/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/06/19/21/44/watermelon-5318938_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">如何在 Egg.js 中使用 Sequelize 的事务 Transaction</h2>
+        <sub class="post-excerpt"><p>Egg.js 框架中使用事务</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-22"
+            >2019-08-22</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Egg.js">Egg.js</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之队列"
+      href="/post/2019/08/18/das-queue/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/01/29/14/41/wardrobe-5961193_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之队列</h2>
+        <sub class="post-excerpt"><p>队列是一种列表，只能在队尾插入元素，在队首删除元素。队列用于存储按顺序排列的的数据，先进先出，可以将队列想象成在饭店排队取餐的人群，在队伍前面的先取餐，后来的人后取餐</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-18"
+            >2019-08-18</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="关于 Flutter 的安卓打包"
+      href="/post/2019/08/14/flutter-android-build/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/04/07/17/13/sea-6159674_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">关于 Flutter 的安卓打包</h2>
+        <sub class="post-excerpt"><p>Flutter 在打包安卓应用时有两种方式 <code>flutter build apk</code> 和 <code>flutter build appbundle</code>，本文说下这两种方式有什么区别</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-14"
+            >2019-08-14</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之栈"
+      href="/post/2019/08/10/dsa-stack/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/04/24/05/41/beach-6203278_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之栈</h2>
+        <sub class="post-excerpt"><p>栈是一种高效的数据结构，因为它只能在栈顶添加或删除，这样的操作很快，它是被称之为后入先出（LIFO，last in first out）的数据结构。可以将栈想象成一叠装菜的盘子，用的时候先拿最上面的，洗好的盘子又会放到最上面</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-10"
+            >2019-08-10</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="数据结构与算法之列表"
+      href="/post/2019/08/08/datastructure-list/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/04/27/15/04/wagtail-6211745_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">数据结构与算法之列表</h2>
+        <sub class="post-excerpt"><p>列表是一种常用的数据结构，如代办事项，十佳榜单等。当不需要在一个很长的序列中查找元素，或者对其排序时，列表显得尤其有用</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-08"
+            >2019-08-08</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="DSA">DSA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="在服务器上搭建 Npm 私服"
+      href="/post/2019/08/08/create-privite-npm-server/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/11/21/31/duckling-6246834_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">在服务器上搭建 Npm 私服</h2>
+        <sub class="post-excerpt"><p>部门需要建一个 npm 私服，我查了一下发现有一个很好用的开源工具 Verdaccio，有 3 中方式可以在自己的服务器上搭建，以 Centos 为例</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-08"
+            >2019-08-08</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Node">Node</span>
+              
+              <span class="post-tag" title="Docker">Docker</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="在 Centos 中安装 Java8"
+      href="/post/2019/08/01/centos-install-java8/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/15/20/15/dandelion-6256593_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">在 Centos 中安装 Java8</h2>
+        <sub class="post-excerpt"><p>由于要在服务器上安装 Jenkins 所以首先要安装 java</p></sub>
+        <span class="post-date">
+          <time datetime="2019-08-01"
+            >2019-08-01</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Centos">Centos</span>
+              
+              <span class="post-tag" title="Java">Java</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="理解 Flutter 应用和部件的生命周期"
+      href="/post/2019/07/28/understand-flutter-lifecycle/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/15/04/49/lake-6254899_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">理解 Flutter 应用和部件的生命周期</h2>
+        <sub class="post-excerpt"><p>在 Flutter 里面部件以及应用本身都有自己的生命周期，本文分别说明它们的生命周期</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-28"
+            >2019-07-28</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Flutter">Flutter</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="对于 Workbox Strategies几种策略的解释"
+      href="/post/2019/07/26/about-workbox-strategies/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/13/15/20/plum-blossom-6251131_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">对于 Workbox Strategies几种策略的解释</h2>
+        <sub class="post-excerpt"><p>要将自己的网站支持 PWA，需要注册一个 serviceWorker 到浏览器中，通常使用 Google 的 Workbox 工具，Workbox 可以在浏览器请求资源的时候提供了几种不同的策略对请求响应，本文对几种策略进行说明</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-26"
+            >2019-07-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Workbox">Workbox</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="使用 Travis CI 部署 Hugo 博客到 Github Pages"
+      href="/post/2019/07/26/hugo-travis-github-page/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/06/23/12/jet-6234694_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">使用 Travis CI 部署 Hugo 博客到 Github Pages</h2>
+        <sub class="post-excerpt"><p>原本使用的是 Netlify 去部署博客的，域名解析也是通过 Netlify 的 DNS 服务器，但是发现博客在别人的电脑上打不开…</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-26"
+            >2019-07-26</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Hugo">Hugo</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="对于 PWA 应用的 manifest.json 文件的解释"
+      href="/post/2019/07/24/about-manifest/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/15/04/49/lake-6254899_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">对于 PWA 应用的 manifest.json 文件的解释</h2>
+        <sub class="post-excerpt"><p>网站要支持 PWA，需要一个 <code>manifest.json</code> 文件，W3C Web App Manifest 的草案上定义了以下的字段，解释一下每个字段是什么意思。</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-24"
+            >2019-07-24</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="PWA">PWA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="让 Hugo 博客支持 PWA"
+      href="/post/2019/07/23/add-pwa-support-to-hugo/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/14/21/50/elephant-6254558_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">让 Hugo 博客支持 PWA</h2>
+        <sub class="post-excerpt"><p>让用 Hugo 搭建的博客支持 PWA 很简单，只需 2 个步骤即可</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-23"
+            >2019-07-23</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="PWA">PWA</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="了解 <Link> 标签上 Rel=prexxx 的作用"
+      href="/post/2019/07/22/understand-link-prexxx/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/06/16/05/clouds-6233856_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">了解 <Link> 标签上 Rel=prexxx 的作用</h2>
+        <sub class="post-excerpt"><p>在 HTML 中 <link> 标签指定了当前文档与外部资源之间的关系，本文说明 <link> 标签的 rel 属性分别设置 dns-prefetch，preconnect，prefetch，preload，prerender 的时候有说明作用</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-22"
+            >2019-07-22</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="HTML">HTML</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="浏览器请求耗时阶段解释"
+      href="/post/2019/07/18/request-timimg/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/12/17/00/holly-blue-6248753_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">浏览器请求耗时阶段解释</h2>
+        <sub class="post-excerpt"><p>对于一个浏览器网络请求耗时阶段解释</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-18"
+            >2019-07-18</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Browser">Browser</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="Dart 语言中的 Final 与 Const 的区别"
+      href="/post/2019/07/16/dart-final-vs-const/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2021/05/14/15/18/path-6253670_960_720.jpg"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">Dart 语言中的 Final 与 Const 的区别</h2>
+        <sub class="post-excerpt"><p>在 Dart 中有 <code>final</code> 和 <code>const</code> 两个关键字，貌似都是表示常量的，但是它们还是有区别的</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-16"
+            >2019-07-16</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Dart">Dart</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+  <li class="post-list-item">
+    <a
+      class="post-list-link"
+      title="关于应用的 Code Signing"
+      href="/post/2019/07/15/code-signing/"
+    >
+      <img
+        class="post-cover"
+        src="https://cdn.pixabay.com/photo/2020/04/03/07/26/eye-4997724_960_720.png"
+        alt="cover"
+        decoding="async"
+        loading="lazy"
+      />
+      <div class="post-content">
+        <h2 class="post-title">关于应用的 Code Signing</h2>
+        <sub class="post-excerpt"><p>Flutter 项目代码签名</p></sub>
+        <span class="post-date">
+          <time datetime="2019-07-15"
+            >2019-07-15</time
+          >
+        </span>
+        <!-- <div class="post-tags">
+              
+              <span class="post-tag" title="Andorid">Andorid</span>
+              
+              <span class="post-tag" title="iOS">iOS</span>
+              
+            </div> -->
+      </div>
+    </a>
+  </li>
+  
+</ul>
+</main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

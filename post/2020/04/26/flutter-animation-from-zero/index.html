@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/flutter-animation-from-zero/cover.png" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">从零开始的 Flutter 动画</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;12
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>动画本质是在一段时间内不断改变屏幕上显示的内容，从而产生<a href="https://zh.wikipedia.org/wiki/%E8%A6%96%E8%A6%BA%E6%9A%AB%E7%95%99" target="_blank" rel="noopener">视觉暂留</a>现象。</p>
+<p>动画一般可分为两类：</p>
+<p><strong>补间动画</strong>：补间动画是一种预先定义物体运动的起点和终点，物体的运动方式，运动时间，时间曲线，然后从起点过渡到终点的动画。</p>
+<p><strong>基于物理的动画</strong>：基于物理的动画是一种模拟现实世界运动的动画，通过建立运动模型来实现。例如一个篮球🏀从高处落下，需要根据其下落高度，重力加速度，地面反弹力等影响因素来建立运动模型。</p>
+<h2 id="Flutter-中的动画"><a href="#Flutter-中的动画" class="headerlink" title="Flutter 中的动画"></a>Flutter 中的动画</h2><p>Flutter 中有多种类型的动画，先从一个简单的例子开始，使用一个 <code>AnimatedContainer</code> 控件，然后设置动画时长 <code>duration</code>，最后调用 <code>setState</code> 方法改变需要变化的属性值，一个动画就创建了。</p>
+<img src="./images/flutter-animation-from-zero/animated-container.gif" alt="animated-container" style="width: 240px;" width="240">
+
+<p>代码如下</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimatedContainerPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _AnimatedContainerPageState createState() =&gt; _AnimatedContainerPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_AnimatedContainerPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">AnimatedContainerPage</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">// 初始的属性值</span></span><br><span class="line">  <span class="built_in">double</span> size = <span class="number">100</span>;</span><br><span class="line">  <span class="built_in">double</span> raidus = <span class="number">25</span>;</span><br><span class="line">  Color color = Colors.yellow;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> _animate() &#123;</span><br><span class="line">    <span class="comment">// 改变属性值</span></span><br><span class="line">    setState(() &#123;</span><br><span class="line">      size = size == <span class="number">100</span> ? <span class="number">200</span> : <span class="number">100</span>;</span><br><span class="line">      raidus = raidus == <span class="number">25</span> ? <span class="number">100</span> : <span class="number">25</span>;</span><br><span class="line">      color = color == Colors.yellow ? Colors.greenAccent : Colors.yellow;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(title: Text(<span class="string">'Animated Container'</span>)),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Column(</span><br><span class="line">          mainAxisAlignment: MainAxisAlignment.center,</span><br><span class="line">          children: [</span><br><span class="line">            <span class="comment">// 在 AnimatedContainer 上应用属性值</span></span><br><span class="line">            AnimatedContainer(</span><br><span class="line">              width: size,</span><br><span class="line">              height: size,</span><br><span class="line">              curve: Curves.easeIn,</span><br><span class="line">              padding: <span class="keyword">const</span> EdgeInsets.all(<span class="number">20.0</span>),</span><br><span class="line">              decoration: BoxDecoration(</span><br><span class="line">                color: color,</span><br><span class="line">                borderRadius: BorderRadius.circular(raidus),</span><br><span class="line">              ),</span><br><span class="line">              duration: <span class="built_in">Duration</span>(seconds: <span class="number">1</span>),</span><br><span class="line">              child: FlutterLogo(),</span><br><span class="line">            )</span><br><span class="line">          ],</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _animate,</span><br><span class="line">        child: Icon(Icons.refresh),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个隐式动画，除此之外还有显式动画，Hreo 动画，交织动画。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>Flutter 动画是建立在以下的概念之上。</p>
+<p><code>Animation</code></p>
+<p>Flutter 中的动画系统基于 <code>Animation</code> 对象， 它是一个抽象类，保存了当前动画的值和状态（开始、暂停、前进、倒退），但不记录屏幕上显示的内容。UI 元素通过读取 <code>Animation</code> 对象的值和监听状态变化运行 <code>build</code> 函数，然后渲染到屏幕上形成动画效果。</p>
+<p>一个 <code>Animation</code> 对象在一段时间内会持续生成介于两个值之间的值，比较常见的类型是 <code>Animation&lt;double&gt;</code>，除 <code>double</code> 类型之外还有 <code>Animation&lt;Color&gt;</code> 或者 <code>Animation&lt;Size&gt;</code> 等。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Animation</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Listenable</span> <span class="keyword">implements</span> <span class="title">ValueListenable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>AnimationController</code></p>
+<p>带有控制方法的 <code>Animation</code> 对象，用来控制动画的启动，暂停，结束，设定动画运行时间等。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnimationController</span> <span class="keyword">extends</span> <span class="title">Animation</span>&lt;<span class="title">double</span>&gt;</span></span><br><span class="line"><span class="class">  <span class="title">with</span> <span class="title">AnimationEagerListenerMixin</span>, <span class="title">AnimationLocalListenersMixin</span>, <span class="title">AnimationLocalStatusListenersMixin</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AnimationController controller = AnimationController(</span><br><span class="line">  vsync: <span class="keyword">this</span>,</span><br><span class="line">  duration: <span class="built_in">Duration</span>(seconds: <span class="number">10</span>),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><code>Tween</code></p>
+<p>用来生成不同类型和范围的动画取值。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tween</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">dynamic</span>&gt; <span class="keyword">extends</span> <span class="title">Animatable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  Tween(&#123; <span class="keyword">this</span>.begin, <span class="keyword">this</span>.end &#125;);</span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// double 类型</span></span><br><span class="line">Tween&lt;<span class="built_in">double</span>&gt; tween = Tween&lt;<span class="built_in">double</span>&gt;(begin: <span class="number">-200</span>, end: <span class="number">200</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// color 类型</span></span><br><span class="line">ColorTween colorTween = ColorTween(begin: Colors.blue, end: Colors.yellow);</span><br><span class="line"></span><br><span class="line"><span class="comment">// border radius 类型</span></span><br><span class="line">BorderRadiusTween radiusTween = BorderRadiusTween(</span><br><span class="line">  begin: BorderRadius.circular(<span class="number">0.0</span>),</span><br><span class="line">  end: BorderRadius.circular(<span class="number">150.0</span>),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><code>Curve</code></p>
+<p>Flutter 动画的默认动画过程是匀速的，使用 <code>CurvedAnimation</code> 可以将时间曲线定义为非线性曲线。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CurvedAnimation</span> <span class="keyword">extends</span> <span class="title">Animation</span>&lt;<span class="title">double</span>&gt; <span class="title">with</span> <span class="title">AnimationWithParentMixin</span>&lt;<span class="title">double</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Animation animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);</span><br></pre></td></tr></table></figure>
+
+<p><code>Ticker</code></p>
+<p><code>Ticker</code> 用来添加每次屏幕刷新的回调函数 <code>TickerCallback</code>，每次屏幕刷新都会调用。类似于 Web 里面的 <code>requestAnimationFrame</code> 方法。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ticker</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Ticker ticker = Ticker(callback);</span><br></pre></td></tr></table></figure>
+
+<h2 id="隐式动画"><a href="#隐式动画" class="headerlink" title="隐式动画"></a>隐式动画</h2><p>隐式动画使用 Flutter 框架内置的动画部件创建，通过设置动画的起始值和最终值来触发。当使用 <code>setState</code> 方法改变部件的动画属性值时，框架会自动计算出一个从旧值过渡到新值的动画。</p>
+<p>比如 <code>AnimatedOpacity</code> 部件，改变它的 <code>opacity</code> 值就可以触发动画。</p>
+<img src="./images/flutter-animation-from-zero/opacity-toggle.gif" alt="opacity-toggle" style="width: 240px;" width="240">
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OpacityChangePage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _OpacityChangePageState createState() =&gt; _OpacityChangePageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_OpacityChangePageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">OpacityChangePage</span>&gt; </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> _opacity = <span class="number">1.0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 改变目标值</span></span><br><span class="line">  <span class="keyword">void</span> _toggle() &#123;</span><br><span class="line">    _opacity = _opacity &gt; <span class="number">0</span> ? <span class="number">0.0</span> : <span class="number">1.0</span>;</span><br><span class="line">    setState(() &#123;&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(title: Text(<span class="string">'隐式动画'</span>)),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: AnimatedOpacity(</span><br><span class="line">          <span class="comment">// 传入目标值</span></span><br><span class="line">          opacity: _opacity,</span><br><span class="line">          duration: <span class="built_in">Duration</span>(seconds: <span class="number">1</span>),</span><br><span class="line">          child: Container(</span><br><span class="line">            width: <span class="number">200</span>,</span><br><span class="line">            height: <span class="number">200</span>,</span><br><span class="line">            color: Colors.blue,</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _toggle,</span><br><span class="line">        child: Icon(Icons.play_arrow),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了 <code>AnimatedOpacity</code> 外，还有其他的内置隐式动画部件如：<code>AnimatedContainer</code>, <code>AnimatedPadding</code>, <code>AnimatedPositioned</code>, <code>AnimatedSwitcher</code>， <code>AnimatedAlign</code> 等。</p>
+<h2 id="显式动画"><a href="#显式动画" class="headerlink" title="显式动画"></a>显式动画</h2><p>显式动画指的是需要手动设置动画的时间，运动曲线，取值范围的动画。将值传递给动画部件如: <code>RotationTransition</code>，最后使用一个<code>AnimationController</code> 控制动画的开始和结束。</p>
+<img src="./images/flutter-animation-from-zero/explicit-animation.gif" alt="explicit-animation" style="width: 240px;" width="240">
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'dart:math'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RotationAinmationPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _RotationAinmationPageState createState() =&gt; _RotationAinmationPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_RotationAinmationPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">RotationAinmationPage</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">with</span> <span class="title">SingleTickerProviderStateMixin</span> </span>&#123;</span><br><span class="line">  AnimationController _controller;</span><br><span class="line">  Animation&lt;<span class="built_in">double</span>&gt; _turns;</span><br><span class="line">  <span class="built_in">bool</span> _playing = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 控制动画运行状态</span></span><br><span class="line">  <span class="keyword">void</span> _toggle() &#123;</span><br><span class="line">    <span class="keyword">if</span> (_playing) &#123;</span><br><span class="line">      _playing = <span class="keyword">false</span>;</span><br><span class="line">      _controller.stop();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      _controller.forward()..whenComplete(() =&gt; _controller.reverse());</span><br><span class="line">      _playing = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    setState(() &#123;&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> initState() &#123;</span><br><span class="line">    <span class="keyword">super</span>.initState();</span><br><span class="line">    <span class="comment">// 初始化动画控制器，设置动画时间</span></span><br><span class="line">    _controller = AnimationController(</span><br><span class="line">      vsync: <span class="keyword">this</span>,</span><br><span class="line">      duration: <span class="built_in">Duration</span>(seconds: <span class="number">10</span>),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置动画取值范围和时间曲线</span></span><br><span class="line">    _turns = Tween(begin: <span class="number">0.0</span>, end: pi * <span class="number">2</span>).animate(</span><br><span class="line">      CurvedAnimation(parent: _controller, curve: Curves.easeIn),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> dispose() &#123;</span><br><span class="line">    <span class="keyword">super</span>.dispose();</span><br><span class="line">    _controller.dispose();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(title: Text(<span class="string">'显示动画'</span>)),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: RotationTransition(</span><br><span class="line">          <span class="comment">// 传入动画值</span></span><br><span class="line">          turns: _turns,</span><br><span class="line">          child: Container(</span><br><span class="line">            width: <span class="number">200</span>,</span><br><span class="line">            height: <span class="number">200</span>,</span><br><span class="line">            child: Image.asset(</span><br><span class="line">              <span class="string">'assets/images/fan.png'</span>,</span><br><span class="line">              fit: BoxFit.cover,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _toggle,</span><br><span class="line">        child: Icon(_playing ? Icons.pause : Icons.play_arrow),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了 <code>RotationTransition</code> 外，还有其他的显示动画部件如：<code>FadeTransition</code>, <code>ScaleTransition</code>, <code>SizeTransition</code>, <code>SlideTransition</code> 等。</p>
+<h2 id="Hero-动画"><a href="#Hero-动画" class="headerlink" title="Hero 动画"></a>Hero 动画</h2><p>Hero 动画指的是在页面切换时一个元素从旧页面运动到新页面的动画。Hero 动画需要使用两个 <code>Hero</code> 控件实现：一个用来在旧页面中，另一个在新页面。两个 <code>Hero</code> 控件需要使用相同的 <code>tag</code> 属性，并且不能与其他<code>tag</code>重复。</p>
+<img src="./images/flutter-animation-from-zero/hero-animation.gif" alt="hero-animation" style="width: 240px;" width="240">
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 页面 1</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'hero_animation_page2.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span> cake1 = <span class="string">'assets/images/cake01.jpg'</span>;</span><br><span class="line"><span class="built_in">String</span> cake2 = <span class="string">'assets/images/cake02.jpg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeroAnimationPage1</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  GestureDetector buildRowItem(context, <span class="built_in">String</span> image) &#123;</span><br><span class="line">    <span class="keyword">return</span> GestureDetector(</span><br><span class="line">      onTap: () &#123;</span><br><span class="line">        <span class="comment">// 跳转到页面 2</span></span><br><span class="line">        Navigator.of(context).push(</span><br><span class="line">          MaterialPageRoute(builder: (ctx) &#123;</span><br><span class="line">            <span class="keyword">return</span> HeroAnimationPage2(image: image);</span><br><span class="line">          &#125;),</span><br><span class="line">        );</span><br><span class="line">      &#125;,</span><br><span class="line">      child: Container(</span><br><span class="line">        width: <span class="number">100</span>,</span><br><span class="line">        height: <span class="number">100</span>,</span><br><span class="line">        child: Hero(</span><br><span class="line">          <span class="comment">// 设置 Hero 的 tag 属性</span></span><br><span class="line">          tag: image,</span><br><span class="line">          child: ClipOval(child: Image.asset(image)),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(title: Text(<span class="string">'页面 1'</span>)),</span><br><span class="line">      body: Column(</span><br><span class="line">        children: &lt;Widget&gt;[</span><br><span class="line">          SizedBox(height: <span class="number">40.0</span>),</span><br><span class="line">          Row(</span><br><span class="line">            mainAxisAlignment: MainAxisAlignment.spaceAround,</span><br><span class="line">            children: &lt;Widget&gt;[</span><br><span class="line">              buildRowItem(context, cake1),</span><br><span class="line">              buildRowItem(context, cake2),</span><br><span class="line">            ],</span><br><span class="line">          ),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 页面 2</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HeroAnimationPage2</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> image;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> HeroAnimationPage2(&#123;<span class="meta">@required</span> <span class="keyword">this</span>.image&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      body: CustomScrollView(</span><br><span class="line">        slivers: &lt;Widget&gt;[</span><br><span class="line">          SliverAppBar(</span><br><span class="line">            expandedHeight: <span class="number">400.0</span>,</span><br><span class="line">            title: Text(<span class="string">'页面 2'</span>),</span><br><span class="line">            backgroundColor: Colors.grey[<span class="number">200</span>],</span><br><span class="line">            flexibleSpace: FlexibleSpaceBar(</span><br><span class="line">              collapseMode: CollapseMode.parallax,</span><br><span class="line">              background: Hero(</span><br><span class="line">                <span class="comment">// 使用从页面 1 传入的 tag 值</span></span><br><span class="line">                tag: image,</span><br><span class="line">                child: Container(</span><br><span class="line">                  decoration: BoxDecoration(</span><br><span class="line">                    image: DecorationImage(</span><br><span class="line">                      image: AssetImage(image),</span><br><span class="line">                      fit: BoxFit.cover,</span><br><span class="line">                    ),</span><br><span class="line">                  ),</span><br><span class="line">                ),</span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">          SliverList(</span><br><span class="line">            delegate: SliverChildListDelegate(</span><br><span class="line">              &lt;Widget&gt;[</span><br><span class="line">                Container(height: <span class="number">600.0</span>, color: Colors.grey[<span class="number">200</span>]),</span><br><span class="line">              ],</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="交织动画"><a href="#交织动画" class="headerlink" title="交织动画"></a>交织动画</h2><p>交织动画是由一系列的小动画组成的动画。每个小动画可以是连续或间断的，也可以相互重叠。其关键点在于使用 <code>Interval</code> 部件给每个小动画设置一个时间间隔，以及为每个动画的设置一个取值范围 <code>Tween</code>，最后使用一个 <code>AnimationController</code> 控制总体的动画状态。</p>
+<p><code>Interval</code> 继承至 <code>Curve</code> 类，通过设置属性 <code>begin</code> 和 <code>end</code> 来确定这个小动画的运行范围。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Interval</span> <span class="keyword">extends</span> <span class="title">Curve</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/// <span class="markdown">动画起始点</span></span></span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> begin;</span><br><span class="line">  <span class="comment">/// <span class="markdown">动画结束点</span></span></span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> end;</span><br><span class="line">  <span class="comment">/// <span class="markdown">动画缓动曲线</span></span></span><br><span class="line">  <span class="keyword">final</span> Curve curve;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// <span class="markdown">...</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-animation-from-zero/staggered-animation.gif" alt="staggered-animation" style="width: 240px;" width="240">
+
+<p>这是一个由 5 个小动画组成的交织动画，宽度，高度，颜色，圆角，边框，每个动画都有自己的动画区间。</p>
+<p><img src="./images/flutter-animation-from-zero/staggered-animation-timeline.png" alt="staggered-animation-timeline"></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StaggeredAnimationPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _StaggeredAnimationPageState createState() =&gt; _StaggeredAnimationPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_StaggeredAnimationPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">StaggeredAnimationPage</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">with</span> <span class="title">SingleTickerProviderStateMixin</span> </span>&#123;</span><br><span class="line">  AnimationController _controller;</span><br><span class="line">  Animation&lt;<span class="built_in">double</span>&gt; _width;</span><br><span class="line">  Animation&lt;<span class="built_in">double</span>&gt; _height;</span><br><span class="line">  Animation&lt;Color&gt; _color;</span><br><span class="line">  Animation&lt;<span class="built_in">double</span>&gt; _border;</span><br><span class="line">  Animation&lt;BorderRadius&gt; _borderRadius;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> _play() &#123;</span><br><span class="line">    <span class="keyword">if</span> (_controller.isCompleted) &#123;</span><br><span class="line">      _controller.reverse();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      _controller.forward();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> initState() &#123;</span><br><span class="line">    <span class="keyword">super</span>.initState();</span><br><span class="line"></span><br><span class="line">    _controller = AnimationController(</span><br><span class="line">      vsync: <span class="keyword">this</span>,</span><br><span class="line">      duration: <span class="built_in">Duration</span>(seconds: <span class="number">5</span>),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    _width = Tween&lt;<span class="built_in">double</span>&gt;(</span><br><span class="line">      begin: <span class="number">100</span>,</span><br><span class="line">      end: <span class="number">300</span>,</span><br><span class="line">    ).animate(</span><br><span class="line">      CurvedAnimation(</span><br><span class="line">        parent: _controller,</span><br><span class="line">        curve: Interval(</span><br><span class="line">          <span class="number">0.0</span>,</span><br><span class="line">          <span class="number">0.2</span>,</span><br><span class="line">          curve: Curves.ease,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    _height = Tween&lt;<span class="built_in">double</span>&gt;(</span><br><span class="line">      begin: <span class="number">100</span>,</span><br><span class="line">      end: <span class="number">300</span>,</span><br><span class="line">    ).animate(</span><br><span class="line">      CurvedAnimation(</span><br><span class="line">        parent: _controller,</span><br><span class="line">        curve: Interval(</span><br><span class="line">          <span class="number">0.2</span>,</span><br><span class="line">          <span class="number">0.4</span>,</span><br><span class="line">          curve: Curves.ease,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    _color = ColorTween(</span><br><span class="line">      begin: Colors.blue,</span><br><span class="line">      end: Colors.yellow,</span><br><span class="line">    ).animate(</span><br><span class="line">      CurvedAnimation(</span><br><span class="line">        parent: _controller,</span><br><span class="line">        curve: Interval(</span><br><span class="line">          <span class="number">0.4</span>,</span><br><span class="line">          <span class="number">0.6</span>,</span><br><span class="line">          curve: Curves.ease,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    _borderRadius = BorderRadiusTween(</span><br><span class="line">      begin: BorderRadius.circular(<span class="number">0.0</span>),</span><br><span class="line">      end: BorderRadius.circular(<span class="number">150.0</span>),</span><br><span class="line">    ).animate(</span><br><span class="line">      CurvedAnimation(</span><br><span class="line">        parent: _controller,</span><br><span class="line">        curve: Interval(</span><br><span class="line">          <span class="number">0.6</span>,</span><br><span class="line">          <span class="number">0.8</span>,</span><br><span class="line">          curve: Curves.ease,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    _border = Tween&lt;<span class="built_in">double</span>&gt;(</span><br><span class="line">      begin: <span class="number">0</span>,</span><br><span class="line">      end: <span class="number">25</span>,</span><br><span class="line">    ).animate(</span><br><span class="line">      CurvedAnimation(</span><br><span class="line">        parent: _controller,</span><br><span class="line">        curve: Interval(<span class="number">0.8</span>, <span class="number">1.0</span>),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(title: Text(<span class="string">'交织动画'</span>)),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: AnimatedBuilder(</span><br><span class="line">          animation: _controller,</span><br><span class="line">          builder: (BuildContext context, Widget child) &#123;</span><br><span class="line">            <span class="keyword">return</span> Container(</span><br><span class="line">              width: _width.value,</span><br><span class="line">              height: _height.value,</span><br><span class="line">              decoration: BoxDecoration(</span><br><span class="line">                color: _color.value,</span><br><span class="line">                borderRadius: _borderRadius.value,</span><br><span class="line">                border: Border.all(</span><br><span class="line">                  width: _border.value,</span><br><span class="line">                  color: Colors.orange,</span><br><span class="line">                ),</span><br><span class="line">              ),</span><br><span class="line">            );</span><br><span class="line">          &#125;,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _play,</span><br><span class="line">        child: Icon(Icons.refresh),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="物理动画"><a href="#物理动画" class="headerlink" title="物理动画"></a>物理动画</h2><p>物理动画是一种模拟现实世界物体运动的动画。需要建立物体的运动模型，以一个物体下落为例，这个运动受到物体的下落高度，重力加速度，地面的反作用力等因素的影响。</p>
+<img src="./images/flutter-animation-from-zero/throw-animation.gif" alt="throw-animation" style="width: 240px;" width="240">
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/scheduler.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThrowAnimationPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _ThrowAnimationPageState createState() =&gt; _ThrowAnimationPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_ThrowAnimationPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">ThrowAnimationPage</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">// 球心高度</span></span><br><span class="line">  <span class="built_in">double</span> y = <span class="number">70.0</span>;</span><br><span class="line">  <span class="comment">// Y 轴速度</span></span><br><span class="line">  <span class="built_in">double</span> vy = <span class="number">-10.0</span>;</span><br><span class="line">  <span class="comment">// 重力</span></span><br><span class="line">  <span class="built_in">double</span> gravity = <span class="number">0.1</span>;</span><br><span class="line">  <span class="comment">// 地面反弹力</span></span><br><span class="line">  <span class="built_in">double</span> bounce = <span class="number">-0.5</span>;</span><br><span class="line">  <span class="comment">// 球的半径</span></span><br><span class="line">  <span class="built_in">double</span> radius = <span class="number">50.0</span>;</span><br><span class="line">  <span class="comment">// 地面高度</span></span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> height = <span class="number">700</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下落方法</span></span><br><span class="line">  <span class="keyword">void</span> _fall(_) &#123;</span><br><span class="line">    y += vy;</span><br><span class="line">    vy += gravity;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果球体接触到地面，根据地面反弹力改变球体的 Y 轴速度</span></span><br><span class="line">    <span class="keyword">if</span> (y + radius &gt; height) &#123;</span><br><span class="line">      y = height - radius;</span><br><span class="line">      vy *= bounce;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (y - radius &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      y = <span class="number">0</span> + radius;</span><br><span class="line">      vy *= bounce;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    setState(() &#123;&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> initState() &#123;</span><br><span class="line">    <span class="keyword">super</span>.initState();</span><br><span class="line">    <span class="comment">// 使用一个 Ticker 在每次更新界面时运行球体下落方法</span></span><br><span class="line">    Ticker(_fall)..start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="built_in">double</span> screenWidth = MediaQuery.of(context).size.width;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(title: Text(<span class="string">'物理动画'</span>)),</span><br><span class="line">      body: Column(</span><br><span class="line">        children: &lt;Widget&gt;[</span><br><span class="line">          Container(</span><br><span class="line">            height: height,</span><br><span class="line">            child: Stack(</span><br><span class="line">              children: &lt;Widget&gt;[</span><br><span class="line">                Positioned(</span><br><span class="line">                  top: y - radius,</span><br><span class="line">                  left: screenWidth / <span class="number">2</span> - radius,</span><br><span class="line">                  child: Container(</span><br><span class="line">                    width: radius * <span class="number">2</span>,</span><br><span class="line">                    height: radius * <span class="number">2</span>,</span><br><span class="line">                    decoration: BoxDecoration(</span><br><span class="line">                      color: Colors.blue,</span><br><span class="line">                      shape: BoxShape.circle,</span><br><span class="line">                    ),</span><br><span class="line">                  ),</span><br><span class="line">                ),</span><br><span class="line">              ],</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">          Expanded(child: Container(color: Colors.blue)),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文介绍了 Flutter 中多种类型的动画，分别是</p>
+<ul>
+<li>隐式动画</li>
+<li>显式动画</li>
+<li>Hero 动画</li>
+<li>交织动画</li>
+<li>基于物理的动画</li>
+</ul>
+<p>一个动画的主要因素有</p>
+<ul>
+<li><code>Animation</code> 动画对象</li>
+<li><code>AnimationController</code> 动画控制器</li>
+<li><code>Tween</code>     动画取值范围</li>
+<li><code>Curve</code>     动画运动曲线</li>
+</ul>
+<p>Flutter 动画基于类型化的 <code>Animation</code> 对象，<code>Widgets</code> 通过读取动画对象的当前值和监听状态变化重新运行 <code>build</code> 函数，不断变化 UI 形成动画效果。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://medium.com/flutter/flutter-animation-basics-with-implicit-animations-95db481c5916" target="_blank" rel="noopener">Flutter animation basics with implicit animations</a></p>
+<p><a href="https://medium.com/flutter/directional-animations-with-built-in-explicit-animations-3e7c5e6fbbd7" target="_blank" rel="noopener">Directional animations with built-in explicit animations</a></p>
+<p><a href="https://flutter.cn/docs/development/ui/animations" target="_blank" rel="noopener">动画效果介绍</a></p>
+<p><a href="https://book.flutterchina.club/chapter9/intro.html" target="_blank" rel="noopener">Flutter动画简介</a></p>
+<p><a href="https://flutter.cn/docs/development/ui/animations/tutorial" target="_blank" rel="noopener">在 Flutter 应用里实现动画效果</a></p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2020/05/07/flutter-animation-decision/"
+      title="选择适合的 Flutter 动画控件"
+    >
+      &larr;&nbsp;选择适合的 Flutter 动画控件
+    </a>
+     
+    <a
+      class=""
+      href="/post/2020/04/13/flutter-stream/"
+      title="在 Flutter 里使用 Stream"
+    >
+      在 Flutter 里使用 Stream&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

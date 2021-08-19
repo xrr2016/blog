@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/draw.jpg" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">PlantUML 类图及 Flowchart 流程图绘制入门</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;3
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间设计后端表结构的时候接触了 <code>PlantUML</code>，它能够直观表现出类的属性和方法，反应出类与类之间的关系。之前有同事就是用 <code>PlantUML</code> 来做后端数据表设计工作的，所以有必要学习一下。</p>
+<p>流程图 <code>Flowchart</code> 是用来展示操作过程或逻辑流程的一种图表，语法比较简单，方便易用，一些比较复杂的判断都可以使用一个流程图来直观表现。</p>
+<h2 id="PlantUML"><a href="#PlantUML" class="headerlink" title="PlantUML"></a>PlantUML</h2><p><a href="https://plantuml.com/zh/" target="_blank" rel="noopener">PlantUML</a> 是一个开源项目，支持快速绘制时序图、用例图、类图、活动图、组件图、状态图、对象图、部署图等。同时还支持非 UML 图的甘特图、架构图等。</p>
+<p><code>PlantUML</code> 有一些通用语法</p>
+<ul>
+<li>单行注释：以单引号 <code>&#39;</code> 开头的语句。</li>
+<li>多行注释：以 <code>/&#39;</code> 和 <code>&#39;/</code> 作为注释的开始和结束。</li>
+<li>页眉：使用 <code>header</code> 命令在生成的图中增加页眉，用 <code>center</code>, <code>left</code> 或 <code>right</code> 实现居中、左对齐和右对齐。</li>
+<li>页脚：使用 <code>footer</code> 命令在生成的图中增加页眉，用 <code>center</code>, <code>left</code> 或 <code>right</code> 实现居中、左对齐和右对齐。</li>
+<li>缩放：使用 <code>scale</code> 命令缩放生成的图像。</li>
+<li>标题：使用 <code>title</code> 关键字添加标题。</li>
+<li>图片标题：使用 <code>caption</code> 关键字在图像下放置一个标题.</li>
+<li>图例说明: <code>legend</code> 和 <code>endlegend</code> 作为关键词，使用 <code>left</code>, <code>right</code>, <code>center</code> 为这个图例指定对齐方式。</li>
+</ul>
+<p>一个🌰 <a href="http://www.plantuml.com/plantuml/uml/FO_D2i8m48JlynHxAmZI8eBYGIhU12_Y2uHsRHVo8ytMvtVHj8V0DxERcQJDwYQTWqVkd6Swx9hD_jW0rOMonC4iBv6fIo5mLA2kGFGS9PDae_liLRomuRMiL3M0peWd6jdrFA7iBv9ZNmWgQXNB_AViidkhfBZQHGEF53ZHzaotsJgLJkJJXwtEys2XQu-ZOjWfX5TAzg8ryo_Hsin-_mK0" target="_blank" rel="noopener">查看</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">scale 720*480</span><br><span class="line"></span><br><span class="line">&#39;A single line comment</span><br><span class="line"></span><br><span class="line">&#x2F;&#39;</span><br><span class="line">  This is</span><br><span class="line">  Multilie</span><br><span class="line">  Comment</span><br><span class="line">&#39;&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">center header</span><br><span class="line">This is header</span><br><span class="line">endheader</span><br><span class="line"></span><br><span class="line">title This is title</span><br><span class="line"></span><br><span class="line">caption This is caption</span><br><span class="line"></span><br><span class="line">Romeo -&gt; Juliet : love</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">legend</span><br><span class="line">This is a legend</span><br><span class="line">endlegend</span><br><span class="line"></span><br><span class="line">footer This is footer</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
+
+<img style="width: 320px;" alt="base" src="http://www.plantuml.com/plantuml/png/HP3D2i8m48JlynHxAmZI8eBYGIhU12_Y2uHsRHVo8ytMvtUnFrwIRoQp6TWwgnjq31wvSPxfiAis-sC551VA4Zkpl4Ic9eN0KO6o0D6pbqoIZUwZL_72XjSvKfG06YCUg6VNseLvODKSsma15RMI9V1JDkxUAYckzgo1HmgSQ7kcssYjIYVowSC0F7VswR_9qUBOCI7mIacjVibC4hMzsGQ-">
+
+
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p>画类图需要了解类与类之间的几种不同的关系</p>
+<table>
+<thead>
+<tr>
+<th align="left">关系</th>
+<th align="left">意思</th>
+<th align="left">标记</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Association 关系</td>
+<td align="left">两个类之间有相互关系</td>
+<td align="left"><code>&lt;--</code></td>
+</tr>
+<tr>
+<td align="left">Inheritance 继承</td>
+<td align="left">子类继承父类</td>
+<td align="left"><code>&lt;|--</code></td>
+</tr>
+<tr>
+<td align="left">Composition 组合</td>
+<td align="left">两个类之间相互依赖</td>
+<td align="left"><code>*--</code></td>
+</tr>
+<tr>
+<td align="left">Aggregation 聚合</td>
+<td align="left">一个类属于另一个类</td>
+<td align="left"><code>o--</code></td>
+</tr>
+<tr>
+<td align="left">Implementation 实现</td>
+<td align="left">一个类实现另一个类的方法</td>
+<td align="left"><code>&lt;|..</code></td>
+</tr>
+<tr>
+<td align="left">Dependency 依赖</td>
+<td align="left">一个类依赖于另一个类</td>
+<td align="left"><code>&lt;..</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://miro.medium.com/max/1180/1*EUvDMA1vr0DiucONPzK9kA.png" alt="关系图"></p>
+<p>设计一个博客系统😜 <a href="http://www.plantuml.com/plantuml/umla/XPBHwjCm58VlynJdSdDs3lL2YiZ4Hn2zh-t11TeKaenTw63Wc5CSSwB3JS4v54MXkn2nEFLfbgQ-XUiQszaXV-X5slFzlfoSj2samsKty8bm7H_XyfNMkKiNMyH59f531nqFETd5WrtyIKS3DNcXbqCrMQfehRzizVODGUOPYX3NTuI0srHG6NAuH-0E3ti2QtNIBwhNkQIkZrcr0TIpWJAPBPskx8IyU7L39f596uJabDqz4jmIU713mwIp9NC2jE5cpWBi7mjwd4eqszKgllg1SCCWG2R_o_IBfhs0icnJ2ppqiTIQ5kfbvKRk_AU27fMLnFdoXCTK9LsXeEp8W2U3g9mX-tGqsIn_cD_L-vPbJcK3wEYjVZfIivV9wqTglFgzU7T1_vYdlsR9_A7-l5BFdgIROHfztzzz-k2dUlpAI9hDuZfjqCy_9kDlQhhPRT-hqIAFbg1f-1JCrUIloBAk5N-G3KaSgsYTiydNQVfXRBn6ToPkx6raNZVm_m00" target="_blank" rel="noopener">点击查看</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">center header</span><br><span class="line">一个简单的博客系统</span><br><span class="line">endheader</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Visitor &#123;</span><br><span class="line"> browse()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Article &#123;</span><br><span class="line"> + id: int</span><br><span class="line"> + author: int</span><br><span class="line"> + content: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class User &#123;</span><br><span class="line">  +id: int</span><br><span class="line">  +name: String</span><br><span class="line"></span><br><span class="line">  - writeArticle(content: string)</span><br><span class="line">  - commentArticle(content: string)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Admin &#123;</span><br><span class="line"> - deleteArticle(id: int)</span><br><span class="line"> - deleteComment(id: int)</span><br><span class="line"> - editArticle(id: int, content: int)</span><br><span class="line"> - editComment(id: int, content: int)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Comment &#123;</span><br><span class="line">  +id: int</span><br><span class="line">  +content: string</span><br><span class="line">  +author: int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">User &lt;|-- Admin : 管理员有删除&#x2F;编辑文章和评论的能力</span><br><span class="line">User &lt;.. Article : 用户可以写文章</span><br><span class="line">User &lt;.. Comment : 用户可以写评论</span><br><span class="line">Article --&gt; Visitor : 游客可以浏览文章</span><br><span class="line">Comment --&gt; Visitor : 游客可以浏览评论</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/learn-chart/class.png" alt="blog"></p>
+<h2 id="Flowchart"><a href="#Flowchart" class="headerlink" title="Flowchart"></a>Flowchart</h2><p>流程图使用 <a href="http://flowchart.js.org/" target="_blank" rel="noopener">Flowchart</a> 绘制，语法比较简单。</p>
+<p>定义一个流程图元素 <code>name=&gt;type: content:&gt;url</code></p>
+<ul>
+<li>name: 元素的名称</li>
+<li>type：类型，包括如下类别：<ul>
+<li>start</li>
+<li>end</li>
+<li>operation</li>
+<li>subroutine</li>
+<li>condition</li>
+<li>inputoutput</li>
+<li>parallel</li>
+</ul>
+</li>
+<li>content：文本内容</li>
+<li>url：连接</li>
+</ul>
+<p>示例如下</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: 艰难的开始</span><br><span class="line">ge=&gt;end: 你成功了:&gt;https:<span class="comment">//www.zhihu.com/hot</span></span><br><span class="line">be=&gt;end: 你失败了:&gt;https:<span class="comment">//bbs.hupu.com/bxj</span></span><br><span class="line"></span><br><span class="line">skill=&gt;condition: 有技能吗</span><br><span class="line">money=&gt;condition: 有钱吗</span><br><span class="line">handsome=&gt;condition: 长得帅吗</span><br><span class="line"></span><br><span class="line">dream=&gt;operation: 做梦</span><br><span class="line">imp=&gt;operation: 努力提高自己</span><br><span class="line">work=&gt;operation: 工作/读书</span><br><span class="line">make=&gt;operation: 投资理财</span><br><span class="line">rich=&gt;operation: 找富婆</span><br><span class="line"></span><br><span class="line">st-&gt;skill</span><br><span class="line">skill(yes)-&gt;work-&gt;ge</span><br><span class="line">skill(no)-&gt;money</span><br><span class="line">money(yes)-&gt;make-&gt;ge</span><br><span class="line">money(no)-&gt;handsome</span><br><span class="line">handsome(yes)-&gt;rich-&gt;ge</span><br><span class="line">handsome(no)-&gt;be</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/learn-chart/flow.png" alt="start"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://plantuml.com/zh/" target="_blank" rel="noopener">PlantUML</a></p>
+<p><a href="https://github.com/adrai/flowchart.js" target="_blank" rel="noopener">Flowchart</a></p>
+<p><a href="https://medium.com/@smagid_allThings/uml-class-diagrams-tutorial-step-by-step-520fd83b300b" target="_blank" rel="noopener">UML Class Diagrams Tutorial, Step by Step</a></p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2020/04/03/how-flutter-render/"
+      title="Flutter 是如何渲染的？"
+    >
+      &larr;&nbsp;Flutter 是如何渲染的？
+    </a>
+     
+    <a
+      class=""
+      href="/post/2020/03/24/flutter-dropdown-problem/"
+      title="记录两个使用 Flutter 的 DropdownButton 问题"
+    >
+      记录两个使用 Flutter 的 DropdownButton 问题&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

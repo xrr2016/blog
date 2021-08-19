@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="https://cdn.pixabay.com/photo/2021/05/14/08/44/running-6252827_960_720.jpg" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">Docker ARG vs ENV</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;1
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>构建 Docker 镜像的的时候有两种环境变量 <code>ARG</code> 和 <code>ENV</code>, 一种是在运行 build 命令时通过 <code>--build-arg</code> 参数设置的 build-time variables 以及通过在 <code>dockerfile</code> 里面设置 <code>ENV</code> 指令配置的环境变量，本文说明它们之间的区别。</p>
+<h2 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h2><p>Dockerfile 里面的 ARG 指令定义了一个变量，在运行 <code>docker build</code> 命令时使用 <code>--build-arg &lt;varname&gt; = &lt;value&gt;</code> 参数将其传递给构建器。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ARG</span> &lt;name&gt;[=&lt;default value&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>这种变量只存在于镜像构建的时候，一旦镜像构建完成就失效了，不要使用构建时变量来传递诸如 github 密钥，用户凭据等机密数据，构建时变量值可以使用 docker history 命令查看。</p>
+<h2 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h2><p>Dockerfile 里面的 ENV 指令将环境变量 <key> 设置为值 <value>，这个变量将在构建阶段中所有后续指令的环境中使用。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> &lt;key&gt; &lt;value&gt;</span><br><span class="line"><span class="keyword">ENV</span> &lt;key&gt;=&lt;value&gt; ...</span><br></pre></td></tr></table></figure>
+
+<p>使用 ENV 设置的环境变量将一直存在于构建镜像时以及镜像容器运行时，可以使用 docker inspect 查看设置打的变量。也可以使用 <code>docker run --env &lt;key&gt; = &lt;value&gt;</code> 来更改它们。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>如果只是需要构建镜像时的环境变量，使用 <code>ARG</code>，如果这个变量在容器运行时也有用到就需要用 <code>ENV</code>，注意使用 <code>ENV</code> 指令定义的环境变量会覆盖同名的 <code>ARG</code> 指令定义的变量。</p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2019/11/01/eggjs-test/"
+      title="对 Egg.js 进行单元测试"
+    >
+      &larr;&nbsp;对 Egg.js 进行单元测试
+    </a>
+     
+    <a
+      class=""
+      href="/post/2019/10/10/code-standard/"
+      title="前端代码规范"
+    >
+      前端代码规范&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

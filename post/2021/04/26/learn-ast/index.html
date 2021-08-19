@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/learn-ast/ast-cover.jpg" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">学习抽象语法树 AST</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;8
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>作为一个前端切图仔，工作中少不了用上 Babel，ESLint，Prettier 这些工具，但是这些工具背后的工作原理却不求甚解😅 ，最近才尝试去了解一番，没想到发现一个全新的世界，那就是 <code>AST</code> 中文名抽象语法树。</p>
+<h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><blockquote>
+<p>在计算机科学中，抽象语法树（Abstract Syntax Tree，AST），或简称语法树（Syntax tree），是源代码语法架构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。之所以说语法是“抽象”的，是因为这里的语法并不会表示出真是语法中出现的每个细节。比如嵌套括号被隐含在树的结构中，并没有以节点的形式呈现；二类似于 <code>if-condition-then</code>这样的条件跳转语句，可以使用带有三个分支的节点来表示。<br>和抽象语法树相对的是具体语法树（通常称作分析树）。一般的，在源代码的翻译和编译过程中，语法分析器创建出分析树，然后从分析树生成AST。一旦AST被创建出来，在后续的处理过程中，比如语义分析阶段，会添加一些信息。</p>
+</blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E8%AA%9E%E6%B3%95%E6%A8%B9" target="_blank" rel="noopener">抽象語法樹</a></p>
+<p>让我们从一个全能的函数开始，它返回<a href="https://zh.wikipedia.org/wiki/%E7%94%9F%E5%91%BD%E3%80%81%E5%AE%87%E5%AE%99%E4%BB%A5%E5%8F%8A%E4%BB%BB%E4%BD%95%E4%BA%8B%E6%83%85%E7%9A%84%E7%B5%82%E6%A5%B5%E7%AD%94%E6%A1%88" target="_blank" rel="noopener">生命、宇宙以及任何事情的终极答案</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> answer = <span class="number">42</span></span><br><span class="line">  <span class="keyword">return</span> answer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先它是一个函数声明，函数名称为 <code>ask</code> ，函数体内定义了一个常量 answer 值为 42，最后返回 answer。把它输入到一个神奇的网站 <a href="https://astexplorer.net/" target="_blank" rel="noopener">astexplorer</a>，神秘的 <code>AST</code> 终于被揭开了面纱。</p>
+<p><img src="./images/learn-ast/ast.jpeg" alt="ast"></p>
+<p>可以看出 <code>AST</code> 就是一个自上而下的树形结构，每一层有一个或多个节点组成，每个节点有一个 <code>type</code> 属性表示节点的类型，如 “FunctionDeclaration”, “BlockStatement”, “VariableDeclaration”，以及节点的其他属性。（节点的类型定义在 <a href="https://github.com/estree/estree" target="_blank" rel="noopener">ESTree</a> 这个仓库，它包括了 es5 到最新的 js 语法定义）。下图可以更清晰的看出这个函数 <code>AST</code> 的结构，至此我们对 <code>AST</code> 有了初步的认识。</p>
+<p><img src="./images/learn-ast/draw.jpeg" alt="draw"></p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>要得到代码的 <code>AST</code>，首先需要对代码进行解析。解析阶段接受源码并输出 <code>AST</code> ，它使用一个解析器对源码进行<strong>词法分析</strong>和<strong>语法分析。</strong> 词法分析将字符串形式的代码转换为一个语法片段数组 <strong>Tokens</strong> ，语法分析阶段把 *<em>Tokens *</em>转换成 <code>AST</code> 形式。</p>
+<h3 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h3><p><strong>Tokens</strong> 是一个数组，由代码语句的碎片组成，它们可以是数字、标签、标点符号、运算符，或者其它任何东西。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源码</span></span><br><span class="line">a + b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tokens</span></span><br><span class="line">[</span><br><span class="line">  &#123; <span class="attr">type</span>: &#123; ... &#125;, <span class="attr">value</span>: <span class="string">"a"</span>, <span class="attr">start</span>: <span class="number">0</span>, <span class="attr">end</span>: <span class="number">1</span>, <span class="attr">loc</span>: &#123; ... &#125; &#125;,</span><br><span class="line">  &#123; <span class="attr">type</span>: &#123; ... &#125;, <span class="attr">value</span>: <span class="string">"+"</span>, <span class="attr">start</span>: <span class="number">2</span>, <span class="attr">end</span>: <span class="number">3</span>, <span class="attr">loc</span>: &#123; ... &#125; &#125;,</span><br><span class="line">  &#123; <span class="attr">type</span>: &#123; ... &#125;, <span class="attr">value</span>: <span class="string">"b"</span>, <span class="attr">start</span>: <span class="number">4</span>, <span class="attr">end</span>: <span class="number">5</span>, <span class="attr">loc</span>: &#123; ... &#125; &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h3><p>语法分析阶段把 *<em>Tokens *</em> 数组转换成 <code>AST</code> 的形式便于后续操作，详细操作可以查看这里的<a href="https://github.com/starkwang/the-super-tiny-compiler-cn/blob/master/super-tiny-compiler-chinese.js#L446" target="_blank" rel="noopener">代码</a>。</p>
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>有了 <code>AST</code> 就可以对这棵树进行从上到下的递归遍历，过程中访问树的节点，这里使用了一种设计模式 <a href="https://zh.wikipedia.org/wiki/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">访问者模式</a>，通过创建一个访问者 <code>visitor</code> 对象，这个对象中包括一些方法，在遍历 <code>AST</code> 过程中进行匹配，匹配成功就调用访问者的方法。</p>
+<p>通过访问节点可以对源码进行语法检查，ESLint 就是基于此，以下是检测语法的规则示例（关于编写 ESLint 规则的详细内容可以查看此<a href="https://cn.eslint.org/docs/developer-guide/working-with-rules" target="_blank" rel="noopener">链接</a>）</p>
+<h4 id="限制函数参数数量"><a href="#限制函数参数数量" class="headerlink" title="限制函数参数数量"></a>限制函数参数数量</h4><p>思路是匹配类型为 <code>FunctionDeclaration</code> 的节点，<code>FunctionDeclaration</code> 表示这个节点为函数声明，如果函数的参数数量大于 3 个就进行提示。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// 访问 FunctionDeclaration 节点</span></span><br><span class="line">    FunctionDeclaration: <span class="function">(<span class="params">node</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 判断函数参数个数</span></span><br><span class="line">      <span class="keyword">if</span> (node.params.length &gt; <span class="number">3</span>) &#123;</span><br><span class="line">        context.report(&#123;</span><br><span class="line">          node,</span><br><span class="line">          message: <span class="string">"参数最多不能超过3个"</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下</p>
+<p><img src="./images/learn-ast/params.png" alt="params"></p>
+<h4 id="限制嵌套的条件语句"><a href="#限制嵌套的条件语句" class="headerlink" title="限制嵌套的条件语句"></a>限制嵌套的条件语句</h4><p>匹配类型为 <code>IfStatement</code> 的节点，如果它的第一个子节点还是 <code>IfStatement</code> 就进行提示。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    IfStatement(node) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; consequent &#125; = node;</span><br><span class="line">      <span class="keyword">const</span> &#123; body &#125; = consequent;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 判断第一个子节点类型是否是 IfStatement</span></span><br><span class="line">      <span class="keyword">if</span> (body[<span class="number">0</span>] &amp;&amp; body[<span class="number">0</span>].type === <span class="string">"IfStatement"</span>) &#123;</span><br><span class="line">        context.report(&#123;</span><br><span class="line">          node: body[<span class="number">0</span>],</span><br><span class="line">          message: <span class="string">"不允许嵌套的条件语句"</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/learn-ast/if.png" alt="if"></p>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>在遍历 <code>AST</code> 过程中可以对树的节点进行修改，如添加，移动，替换这些节点，也可以生成全新的 <code>AST</code>。</p>
+<p>Babel 的作用就是修改 <code>AST</code> 上的节点，从而到达修改代码的效果。一个 Babel 插件是一个接收 <code>babel</code> 对象作为参数的函数，返回一个带有 <code>visitor</code> 属性的对象。<code>visitor</code> 对象中的每个函数接受 <code>path</code> 和 <code>state</code> 参数，以下是编写 Babel 插件示例，关于编写 Babel 插件可以查看此<a href="https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md#toc-stages-of-babel" target="_blank" rel="noopener">链接</a>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Babel 插件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params">babel</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    visitor: &#123;</span><br><span class="line">      Identifier(path, state) &#123;&#125;,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="将-语法转换为-Math-pow"><a href="#将-语法转换为-Math-pow" class="headerlink" title="将 ** 语法转换为 Math.pow"></a>将 <code>**</code> 语法转换为 <code>Math.pow</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Before</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">10</span> ** <span class="number">2</span> </span><br><span class="line"><span class="comment">// After</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>找到 <code>**</code> 语法所在位置</li>
+<li>获取左右操作数</li>
+<li>创建 <code>Math.pow</code> 语句，替换原节点</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">babel</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">types</span>: t &#125; = babel;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    visitor: &#123;</span><br><span class="line">      <span class="comment">// 访问二元表达式</span></span><br><span class="line">      BinaryExpression(path) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; node &#125; = path</span><br><span class="line">        <span class="comment">// 如果操作符不是 ** 就退出</span></span><br><span class="line">        <span class="keyword">if</span> (node.operator !== <span class="string">'**'</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const</span> &#123; left, right &#125; = node</span><br><span class="line">        <span class="comment">// 创建调用语句</span></span><br><span class="line">        <span class="keyword">const</span> newNode = t.callExpression(</span><br><span class="line">          t.memberExpression(t.identifier(<span class="string">'Math'</span>), t.identifier(<span class="string">'pow'</span>)),</span><br><span class="line">          [left, right]</span><br><span class="line">        )</span><br><span class="line">        <span class="comment">// 替换原节点</span></span><br><span class="line">        path.replaceWith(newNode)</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改工具函数引入方式"><a href="#修改工具函数引入方式" class="headerlink" title="修改工具函数引入方式"></a>修改工具函数引入方式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Before</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">get</span>, isFunction &#125; from 'lodash'</span><br><span class="line">// After</span><br><span class="line">import <span class="keyword">get</span> from "lodash/<span class="keyword">get</span>";</span><br><span class="line">import isFunction from "lodash/isFunction";</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>找到 <code>lodash</code> 的 <code>import</code> 节点</li>
+<li>遍历所有的引入值，获取引用的 <code>name</code> 属性</li>
+<li>插入新生成的 <code>import</code> 节点</li>
+<li>删除原节点</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">babel</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">types</span>: t &#125; = babel;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    visitor: &#123;</span><br><span class="line">      <span class="comment">// 访问导入声明</span></span><br><span class="line">      ImportDeclaration(path) &#123;</span><br><span class="line">        <span class="keyword">let</span> &#123; node &#125; = path</span><br><span class="line">        <span class="keyword">if</span> (node.source.value !== <span class="string">'lodash'</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const</span> val = node.source.value</span><br><span class="line"></span><br><span class="line">        node.specifiers.forEach(<span class="function">(<span class="params">spec</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (t.isImportSpecifier(spec)) &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123; local &#125; = spec</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 插入新的导入节点</span></span><br><span class="line">            path.insertBefore(</span><br><span class="line">              t.importDeclaration(</span><br><span class="line">                [t.importDefaultSpecifier(local)],</span><br><span class="line">                t.stringLiteral(<span class="string">`<span class="subst">$&#123;val&#125;</span>/<span class="subst">$&#123;local.name&#125;</span>`</span>)</span><br><span class="line">              )</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">// 删除原节点</span></span><br><span class="line">        path.remove()</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h2><p>就是根据 <code>AST</code> 输出代码，下面通过两个工具说明。</p>
+<h3 id="Jscodeshift"><a href="#Jscodeshift" class="headerlink" title="Jscodeshift"></a>Jscodeshift</h3><p><a href="https://github.com/facebook/jscodeshift" target="_blank" rel="noopener">jscodeshift</a> 是一个 Facebook 开源的用来对 JavaScript 或者 TypeScript 文件运行转换的工具，它的目的是更方便的批量修改代码。它通过接受 *<em>transformer *</em>对源码进行转换，一个 *<em>transformer *</em>就是一个接受 <code>fileInfo</code>, <code>api</code>, <code>options</code> 参数并返回源码的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">fileInfo, api, options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// transform `fileInfo.source` here</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// return changed source</span></span><br><span class="line">  <span class="keyword">return</span> source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>示例，将 <code>&lt;React.Fragment&gt;</code> 转换成 <code>&lt;&gt;``&lt;/&gt;</code> 语法，思路是找到 <code>name</code> 属性为 <code>Fragment</code> 的节点，然后将它的父节点清除。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">transformer</span>(<span class="params">file, api</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> j = api.jscodeshift</span><br><span class="line">  <span class="keyword">const</span> root = j(file.source)</span><br><span class="line"></span><br><span class="line">  root.find(j.JSXIdentifier).forEach(<span class="function">(<span class="params">p</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; node &#125; = p</span><br><span class="line">    <span class="keyword">if</span> (node.name !== <span class="string">'Fragment'</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    j(p.parent).remove()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> root.toSource()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/learn-ast/header.gif" alt="header"></p>
+<p>更多示例可查看这个<a href="https://github.com/cpojer/js-codemod/" target="_blank" rel="noopener">链接</a></p>
+<h3 id="Gogocode"><a href="#Gogocode" class="headerlink" title="Gogocode"></a>Gogocode</h3><p><a href="https://github.com/thx/gogocode" target="_blank" rel="noopener">gogocode</a> 是最近发现的一个 <code>AST</code> 处理工具，号称全网最简单易上手，可读性最强，提供的示例提供类似于 jQuery 的 API。</p>
+<p>一个替换变量名例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> $ = <span class="built_in">require</span>(<span class="string">'gogocode'</span>)</span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`</span></span><br><span class="line"><span class="string">  function ask() &#123;</span></span><br><span class="line"><span class="string">    const answer = 42</span></span><br><span class="line"><span class="string">    return answer</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="keyword">const</span> newCode = $(code)</span><br><span class="line">  .replace(<span class="string">'ask'</span>, <span class="string">'question'</span>)</span><br><span class="line">  .replace(<span class="string">'answer'</span>, <span class="string">'result'</span>)</span><br><span class="line">  .generate()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(newCode)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="comment">// function question() &#123;</span></span><br><span class="line"><span class="comment">//   const result = 42</span></span><br><span class="line"><span class="comment">//   return result;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/learn-ast/gogocode.gif" alt="gogocode"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文解释了什么是 <code>AST</code> 抽象语法树，如何获得代码的 <code>AST</code>，以及对 <code>AST</code> 进行遍历，修改和生成，利用 <code>AST</code> 我们可以开发的代码工具。</p>
+<p><a href="https://github.com/xrr2016/ast-learn" target="_blank" rel="noopener">本文代码地址</a></p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="https://github.com/cowchimp/awesome-ast" target="_blank" rel="noopener">Awesome AST</a><br><a href="https://github.com/estree/estree" target="_blank" rel="noopener">The ESTree Spec</a><a href="https://github.com/cowchimp/awesome-ast" target="_blank" rel="noopener"> </a><br><a href="https://github.com/jamiebuilds/babel-handbook" target="_blank" rel="noopener">Babel Handbook</a><br><a href="https://github.com/jamiebuilds/the-super-tiny-compiler" target="_blank" rel="noopener">The Super Tiny Compiler</a><br><a href="https://cn.eslint.org/docs/developer-guide/working-with-rules" target="_blank" rel="noopener">Working with Rules</a><br><a href="https://github.com/facebook/jscodeshift" target="_blank" rel="noopener">jscodeshift</a><br><a href="https://github.com/thx/gogocode" target="_blank" rel="noopener">GOGOCODE</a></p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2021/07/29/react-context-hooks/"
+      title="使用 Context 避免深层属性传递"
+    >
+      &larr;&nbsp;使用 Context 避免深层属性传递
+    </a>
+     
+    <a
+      class=""
+      href="/post/2021/04/13/js-check-element/"
+      title="JS 检查元素是否在视口内"
+    >
+      JS 检查元素是否在视口内&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

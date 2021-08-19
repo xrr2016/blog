@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/flutter-generative-artistry-02/cover.png" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">Flutter 绘制三角网格 Triangular Mesh</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;5
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文实现 <a href="https://generativeartistry.com/tutorials/" target="_blank" rel="noopener">Generative Artistry</a> 教程的第 4 篇图形 Triangular mesh 效果如下。</p>
+<img src="./images/flutter-generative-artistry-02/colors.png" width="580" style="width: 290px">
+
+<p>没按顺序来，因为第二篇 Joy Division 我还没实现 😝</p>
+<h2 id="创建画布"><a href="#创建画布" class="headerlink" title="创建画布"></a>创建画布</h2><p>首先创建一个用于绘制的画布，然后实现 <code>TriangularMeshPainter</code> 的 <code>paint</code> 方法。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TriangularMesh</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> CustomPaint(</span><br><span class="line">      painter: TriangularMeshPainter(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TriangularMeshPainter</span> <span class="keyword">extends</span> <span class="title">CustomPainter</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;&#125;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="built_in">bool</span> shouldRepaint(TriangularMeshPainter oldDelegate) =&gt; <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="绘制端点"><a href="#绘制端点" class="headerlink" title="绘制端点"></a>绘制端点</h2><p>声明一个 <code>gap</code> 变量等比分割画布，在纵轴，横轴方向每隔 <code>gap</code> 长度使用 <code>canvas.drawCircle</code> 方法绘制圆点。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TriangularMeshPainter</span> <span class="keyword">extends</span> <span class="title">CustomPainter</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">    <span class="comment">// 声明 line 和 lines 变量存储点和线</span></span><br><span class="line">    <span class="built_in">List</span> line;</span><br><span class="line">    <span class="built_in">List</span> lines = [];</span><br><span class="line">    <span class="built_in">double</span> gap = size.width / <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置点的绘制属性</span></span><br><span class="line">    Paint paint = Paint()</span><br><span class="line">      ..color = Colors.black</span><br><span class="line">      ..isAntiAlias = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 纵轴方向</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">double</span> y = gap / <span class="number">2</span>; y &lt;= size.height; y += gap) &#123;</span><br><span class="line">      line = [];</span><br><span class="line">      <span class="comment">// 横轴方向</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="built_in">double</span> x = gap / <span class="number">4</span>; x &lt;= size.width; x += gap) &#123;</span><br><span class="line">        line.add(&#123;<span class="string">"x"</span>: x, <span class="string">"y"</span>: y&#125;);</span><br><span class="line">        <span class="comment">// 绘制圆，参数分别是圆点位置，圆的半径，绘制属性</span></span><br><span class="line">        canvas.drawCircle(Offset(x, y), <span class="number">1</span>, paint);</span><br><span class="line">      &#125;</span><br><span class="line">      lines.add(line);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-generative-artistry-02/circle.png" width="580" style="width: 290px">
+
+<p>创建一个 <code>Point</code> 类，表示一个绘制的圆点。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> x;</span><br><span class="line">  <span class="built_in">double</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了使点之间形成三角形，使用一个 <code>odd</code> 变量，在每次添加圆点的时候改变点的横轴值，形成交错效果。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@override</span></span><br><span class="line"><span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">  <span class="built_in">bool</span> odd = <span class="keyword">false</span>;</span><br><span class="line">  <span class="built_in">List</span>&lt;Point&gt; line;</span><br><span class="line">  <span class="built_in">List</span>&lt;<span class="built_in">List</span>&lt;Point&gt;&gt; lines = [];</span><br><span class="line">  <span class="built_in">double</span> gap = size.width / <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">  Paint paint = Paint()</span><br><span class="line">    ..color = Colors.black</span><br><span class="line">    ..isAntiAlias = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">double</span> y = gap / <span class="number">2</span>; y &lt;= size.height; y += gap) &#123;</span><br><span class="line">    <span class="comment">// 每次添加圆点之前对 odd 取反</span></span><br><span class="line">    odd = !odd;</span><br><span class="line">    line = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">double</span> x = gap / <span class="number">4</span>; x &lt;= size.width; x += gap) &#123;</span><br><span class="line">      Point point = Point();</span><br><span class="line">      <span class="comment">// 赋值圆点横轴位置时根据 odd 变量判断是否需要增加距离</span></span><br><span class="line">      point.x = x + (odd ? gap / <span class="number">2</span> : <span class="number">0</span>);</span><br><span class="line">      point.y = y;</span><br><span class="line">      <span class="comment">// 将点添加到 line 数组</span></span><br><span class="line">      line.add(point);</span><br><span class="line">      canvas.drawCircle(Offset(point.x, point.y), <span class="number">1</span>, paint);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    lines.add(line);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-generative-artistry-02/odd.png" width="580" style="width: 290px">
+
+<h2 id="绘制网格"><a href="#绘制网格" class="headerlink" title="绘制网格"></a>绘制网格</h2><p>接下来需要建立 3 个点之间的关系，从而绘制三角形。首先创建一个接收三角形三个坐标，并连接绘制它们的函数。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> _drawTriangle(Canvas canvas, Point pointA, Point pointB, Point pointC) &#123;</span><br><span class="line">  <span class="comment">// 使用一个路径链接 3 点并绘制这条路径</span></span><br><span class="line">  Path path = Path();</span><br><span class="line">  Paint line = Paint()</span><br><span class="line">    ..color = Colors.black</span><br><span class="line">    ..style = PaintingStyle.stroke</span><br><span class="line">    ..strokeJoin = StrokeJoin.bevel</span><br><span class="line">    ..isAntiAlias = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">  path.moveTo(pointA.x, pointA.y);</span><br><span class="line">  path.lineTo(pointB.x, pointB.y);</span><br><span class="line">  path.lineTo(pointC.x, pointC.y);</span><br><span class="line">  path.lineTo(pointA.x, pointA.y);</span><br><span class="line">  <span class="comment">// 参数分别是路径，路径的绘制属性</span></span><br><span class="line">  canvas.drawPath(path, line);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后遍历所有存储的线，并组合相邻线的点以形成三角形。</p>
+<blockquote>
+<p><a href="https://github.com/JChehe/blog/issues/24" target="_blank" rel="noopener">这部分也许会有点难以理解。脚本会遍历所有线，并组合相邻线的点以形成三角形。为了便于理解，我们将相邻的两条线分别称为 a 和 b。然后将两线符合要求的点合并到一个数组中，使其看起来像“之”字型：a1、b1、a2、b2、a3 以此类推。<br>这将为我们提供了一个含有三角形所有坐标的数组。如：[a1, b1, a2]、[b1, a2, b2], [a2, b2, a3] 等。</a></p>
+</blockquote>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@override</span></span><br><span class="line"><span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">  <span class="comment">///<span class="markdown">...</span></span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">List</span> dotLine;</span><br><span class="line">  odd = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">int</span> y = <span class="number">0</span>; y &lt; lines.length - <span class="number">1</span>; y++) &#123;</span><br><span class="line">    odd = !odd;</span><br><span class="line">    dotLine = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; lines[y].length; i++) &#123;</span><br><span class="line">      dotLine.add(odd ? lines[y][i] : lines[y + <span class="number">1</span>][i]);</span><br><span class="line">      dotLine.add(odd ? lines[y + <span class="number">1</span>][i] : lines[y][i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; dotLine.length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">      _drawTriangle(canvas, dotLine[i], dotLine[i + <span class="number">1</span>], dotLine[i + <span class="number">2</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-generative-artistry-02/triangle.png" width="580" style="width: 290px">
+
+<p>创建圆点时加入随机量，形成不规则的三角形。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">double</span> x = gap / <span class="number">4</span>; x &lt;= size.width; x += gap) &#123;</span><br><span class="line">  Point point = Point();</span><br><span class="line">  <span class="built_in">double</span> random = (Random().nextDouble() * <span class="number">.8</span> - <span class="number">.4</span>) * gap;</span><br><span class="line">  point.x = x + random + (odd ? gap / <span class="number">2</span> : <span class="number">0</span>);</span><br><span class="line">  point.y = y + (Random().nextDouble() * <span class="number">.8</span> - <span class="number">.4</span>) * gap;</span><br><span class="line">  line.add(point);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-generative-artistry-02/random.png" width="580" style="width: 290px">
+
+<h2 id="添加颜色"><a href="#添加颜色" class="headerlink" title="添加颜色"></a>添加颜色</h2><p>最后在绘制三角形函数那里加上一些颜色，只需要设置路径的 <code>color</code> 和 <code>style</code> 绘制属性即可。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> _drawTriangle(Canvas canvas, Point pointA, Point pointB, Point pointC) &#123;</span><br><span class="line">  Path path = Path();</span><br><span class="line">  Paint fill = Paint()</span><br><span class="line">    <span class="comment">// 添加颜色，可以尝试设置不同的颜色</span></span><br><span class="line">    ..color = Colors.black.withOpacity(Random().nextDouble() * <span class="number">.9</span>)</span><br><span class="line">    <span class="comment">// ..color = colors[Random().nextInt(colors.length)].withOpacity(.8)</span></span><br><span class="line">    <span class="comment">// 将路径的绘制样式设置为 fill</span></span><br><span class="line">    ..style = PaintingStyle.fill</span><br><span class="line">    ..strokeJoin = StrokeJoin.bevel</span><br><span class="line">    ..isAntiAlias = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">  Paint line = Paint()</span><br><span class="line">    ..color = Colors.black</span><br><span class="line">    ..style = PaintingStyle.stroke</span><br><span class="line">    ..strokeJoin = StrokeJoin.bevel</span><br><span class="line">    ..isAntiAlias = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">  path.moveTo(pointA.x, pointA.y);</span><br><span class="line">  path.lineTo(pointB.x, pointB.y);</span><br><span class="line">  path.lineTo(pointC.x, pointC.y);</span><br><span class="line">  path.lineTo(pointA.x, pointA.y);</span><br><span class="line"></span><br><span class="line">  canvas.drawPath(path, fill);</span><br><span class="line">  <span class="comment">// 新增一个路径绘制</span></span><br><span class="line">  canvas.drawPath(path, line);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大功告成！👏</p>
+<img src="./images/flutter-generative-artistry-02/black.png" width="580" style="width: 290px">
+
+<img src="./images/flutter-generative-artistry-02/colors.png" width="580" style="width: 290px">
+
+<p><a href="https://github.com/xrr2016/flutter-generative-artistry/blob/master/lib/graphs/triangular_mesh.dart" target="_blank" rel="noopener">代码地址</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://generativeartistry.com/tutorials/triangular-mesh" target="_blank" rel="noopener">Triangular Mesh</a></p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2020/07/28/github-action-publish-flutter-plugin/"
+      title="使用 Github Action 发布 Flutter 插件"
+    >
+      &larr;&nbsp;使用 Github Action 发布 Flutter 插件
+    </a>
+     
+    <a
+      class=""
+      href="/post/2020/07/07/flutter-generative-artistry-01/"
+      title="Flutter 绘制瓷砖线 Tiled Lines"
+    >
+      Flutter 绘制瓷砖线 Tiled Lines&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

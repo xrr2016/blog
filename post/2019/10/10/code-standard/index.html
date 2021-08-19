@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="https://cdn.pixabay.com/photo/2020/02/05/22/37/seagulls-4822595_960_720.jpg" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">前端代码规范</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;15
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>良好的代码规范有利于提高项目开发效率以及减少阅读代码的困难，本规范结合了(chaoxi)多个流行的代码规范以及前人的开发经验而成，参考规范进行开发提高代码质量</p>
+<h2 id="HTML-规范"><a href="#HTML-规范" class="headerlink" title="HTML 规范"></a>HTML 规范</h2><p>设置标准模式的文档类型</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置页面语言</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置页面字符编码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用语义化的标签准确地描述网页的内容</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>published: <span class="tag">&lt;<span class="name">time</span> <span class="attr">datetime</span>=<span class="string">"2015-02-21"</span>&gt;</span>21st Feb, 2015<span class="tag">&lt;/<span class="name">time</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>content<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aside</span>&gt;</span>...<span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span>...<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>确保页面可访问性</p>
+<ul>
+<li>给 <code>img</code>  标签添加正确的 <code>alt</code>  属性</li>
+<li>使用 <code>label</code>  标签对表单进行控制</li>
+</ul>
+<p>使用字符实体替代特殊字符</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="symbol">&amp;gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="symbol">&amp;copy;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="symbol">&amp;lt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用两个空格缩进</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>按特定顺序书写标签属性</p>
+<ol>
+<li><code>class</code></li>
+<li><code>id</code>, <code>name</code></li>
+<li><code>data-*</code></li>
+<li><code>src</code>, <code>for</code>, <code>type</code>, <code>href</code>, <code>value</code></li>
+<li><code>title</code>, <code>alt</code></li>
+<li><code>role</code>, <code>aria-*</code></li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"link"</span> <span class="attr">id</span>=<span class="string">"link"</span> <span class="attr">data-toggle</span>=<span class="string">"modal"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"example.jpg"</span> <span class="attr">alt</span>=<span class="string">"dog"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不对布尔属性赋值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">disabled</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"1"</span> <span class="attr">checked</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span> <span class="attr">selected</span>&gt;</span>1<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="CSS-规范"><a href="#CSS-规范" class="headerlink" title="CSS 规范"></a>CSS 规范</h2><p>全局设置盒子模型</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用简洁的 class 命名</p>
+<p>class 的命名应该尽量简洁、明确，以字母开头命名，且全部字母为小写，单词之间使用连字符 “-”  连接。<br />每个模块使用一个模块命名，子元素使用模块名 + 元素作用名名</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 示例 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">"header"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"header-title"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用常用的 class 命名</p>
+<p><strong>包裹类：</strong> container, wrapper, outer, inner, box, header, footer, main, content, aside, page, section, block</p>
+<p><strong>状态类：</strong> primary, secondary, success, danger, warning, info, error, link, light, dark, disabled, active,         checked, loading</p>
+<p><strong>尺寸类：</strong> large, middle, small, bigger, smaller</p>
+<p><strong>组件类：</strong> card, list, picture, carousel, swiper, menu, navs, badge, hint, modal, dialog</p>
+<p><strong>位置类：</strong> first, last, current, prev, next, forward, back</p>
+<p><strong>文本类：</strong> title, desc, content, date, author, category，label，tag</p>
+<p><strong>人物类：</strong> avatar, name, age, post, intro</p>
+<table>
+<thead>
+<tr>
+<th align="left">Class Name</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">about</td>
+<td align="left">关于</td>
+</tr>
+<tr>
+<td align="left">account</td>
+<td align="left">账户</td>
+</tr>
+<tr>
+<td align="left">arrow</td>
+<td align="left">箭头图标</td>
+</tr>
+<tr>
+<td align="left">article</td>
+<td align="left">文章</td>
+</tr>
+<tr>
+<td align="left">aside</td>
+<td align="left">边栏</td>
+</tr>
+<tr>
+<td align="left">audio</td>
+<td align="left">音频</td>
+</tr>
+<tr>
+<td align="left">avatar</td>
+<td align="left">头像</td>
+</tr>
+<tr>
+<td align="left">bg,background</td>
+<td align="left">背景</td>
+</tr>
+<tr>
+<td align="left">bar</td>
+<td align="left">栏（工具类）</td>
+</tr>
+<tr>
+<td align="left">branding</td>
+<td align="left">品牌化</td>
+</tr>
+<tr>
+<td align="left">crumb,breadcrumbs</td>
+<td align="left">面包屑</td>
+</tr>
+<tr>
+<td align="left">btn,button</td>
+<td align="left">按钮</td>
+</tr>
+<tr>
+<td align="left">caption</td>
+<td align="left">标题，说明</td>
+</tr>
+<tr>
+<td align="left">category</td>
+<td align="left">分类</td>
+</tr>
+<tr>
+<td align="left">chart</td>
+<td align="left">图表</td>
+</tr>
+<tr>
+<td align="left">clearfix</td>
+<td align="left">清除浮动</td>
+</tr>
+<tr>
+<td align="left">close</td>
+<td align="left">关闭</td>
+</tr>
+<tr>
+<td align="left">col,column</td>
+<td align="left">列</td>
+</tr>
+<tr>
+<td align="left">comment</td>
+<td align="left">评论</td>
+</tr>
+<tr>
+<td align="left">community</td>
+<td align="left">社区</td>
+</tr>
+<tr>
+<td align="left">container</td>
+<td align="left">容器</td>
+</tr>
+<tr>
+<td align="left">content</td>
+<td align="left">内容</td>
+</tr>
+<tr>
+<td align="left">copyright</td>
+<td align="left">版权</td>
+</tr>
+<tr>
+<td align="left">current</td>
+<td align="left">当前态，选中态</td>
+</tr>
+<tr>
+<td align="left">default</td>
+<td align="left">默认</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">描述</td>
+</tr>
+<tr>
+<td align="left">details</td>
+<td align="left">细节</td>
+</tr>
+<tr>
+<td align="left">disabled</td>
+<td align="left">不可用</td>
+</tr>
+<tr>
+<td align="left">entry</td>
+<td align="left">文章，博文</td>
+</tr>
+<tr>
+<td align="left">error</td>
+<td align="left">错误</td>
+</tr>
+<tr>
+<td align="left">even</td>
+<td align="left">偶数，常用于多行列表或表格中</td>
+</tr>
+<tr>
+<td align="left">fail</td>
+<td align="left">失败（提示）</td>
+</tr>
+<tr>
+<td align="left">feature</td>
+<td align="left">专题</td>
+</tr>
+<tr>
+<td align="left">fewer</td>
+<td align="left">收起</td>
+</tr>
+<tr>
+<td align="left">field</td>
+<td align="left">用于表单的输入区域</td>
+</tr>
+<tr>
+<td align="left">figure</td>
+<td align="left">图</td>
+</tr>
+<tr>
+<td align="left">filter</td>
+<td align="left">筛选</td>
+</tr>
+<tr>
+<td align="left">first</td>
+<td align="left">第一个，常用于列表中</td>
+</tr>
+<tr>
+<td align="left">footer</td>
+<td align="left">页脚</td>
+</tr>
+<tr>
+<td align="left">forum</td>
+<td align="left">论坛</td>
+</tr>
+<tr>
+<td align="left">gallery</td>
+<td align="left">画廊</td>
+</tr>
+<tr>
+<td align="left">group</td>
+<td align="left">模块，清除浮动</td>
+</tr>
+<tr>
+<td align="left">header</td>
+<td align="left">页头</td>
+</tr>
+<tr>
+<td align="left">help</td>
+<td align="left">帮助</td>
+</tr>
+<tr>
+<td align="left">hide</td>
+<td align="left">隐藏</td>
+</tr>
+<tr>
+<td align="left">hightlight</td>
+<td align="left">高亮</td>
+</tr>
+<tr>
+<td align="left">home</td>
+<td align="left">主页</td>
+</tr>
+<tr>
+<td align="left">icon</td>
+<td align="left">图标</td>
+</tr>
+<tr>
+<td align="left">info,information</td>
+<td align="left">信息</td>
+</tr>
+<tr>
+<td align="left">last</td>
+<td align="left">最后一个，常用于列表中</td>
+</tr>
+<tr>
+<td align="left">links</td>
+<td align="left">链接</td>
+</tr>
+<tr>
+<td align="left">login</td>
+<td align="left">登录</td>
+</tr>
+<tr>
+<td align="left">logout</td>
+<td align="left">退出</td>
+</tr>
+<tr>
+<td align="left">logo</td>
+<td align="left">标志</td>
+</tr>
+<tr>
+<td align="left">main</td>
+<td align="left">主体</td>
+</tr>
+<tr>
+<td align="left">menu</td>
+<td align="left">菜单</td>
+</tr>
+<tr>
+<td align="left">meta</td>
+<td align="left">作者、更新时间等信息栏，一般位于标题之下</td>
+</tr>
+<tr>
+<td align="left">module</td>
+<td align="left">模块</td>
+</tr>
+<tr>
+<td align="left">more</td>
+<td align="left">更多（展开）</td>
+</tr>
+<tr>
+<td align="left">msg,message</td>
+<td align="left">消息</td>
+</tr>
+<tr>
+<td align="left">nav,navigation</td>
+<td align="left">导航</td>
+</tr>
+<tr>
+<td align="left">next</td>
+<td align="left">下一页</td>
+</tr>
+<tr>
+<td align="left">nub</td>
+<td align="left">小块</td>
+</tr>
+<tr>
+<td align="left">odd</td>
+<td align="left">奇数，常用于多行列表或表格中</td>
+</tr>
+<tr>
+<td align="left">off</td>
+<td align="left">鼠标离开</td>
+</tr>
+<tr>
+<td align="left">on</td>
+<td align="left">鼠标移过</td>
+</tr>
+<tr>
+<td align="left">output</td>
+<td align="left">输出</td>
+</tr>
+<tr>
+<td align="left">pagination</td>
+<td align="left">分页</td>
+</tr>
+<tr>
+<td align="left">pop,popup</td>
+<td align="left">弹窗</td>
+</tr>
+<tr>
+<td align="left">preview</td>
+<td align="left">预览</td>
+</tr>
+<tr>
+<td align="left">previous</td>
+<td align="left">上一页</td>
+</tr>
+<tr>
+<td align="left">primary</td>
+<td align="left">主要</td>
+</tr>
+<tr>
+<td align="left">progress</td>
+<td align="left">进度条</td>
+</tr>
+<tr>
+<td align="left">promotion</td>
+<td align="left">促销</td>
+</tr>
+<tr>
+<td align="left">rcommd,recommendations</td>
+<td align="left">推荐</td>
+</tr>
+<tr>
+<td align="left">reg,register</td>
+<td align="left">注册</td>
+</tr>
+<tr>
+<td align="left">save</td>
+<td align="left">保存</td>
+</tr>
+<tr>
+<td align="left">search</td>
+<td align="left">搜索</td>
+</tr>
+<tr>
+<td align="left">secondary</td>
+<td align="left">次要</td>
+</tr>
+<tr>
+<td align="left">section</td>
+<td align="left">区块</td>
+</tr>
+<tr>
+<td align="left">selected</td>
+<td align="left">已选</td>
+</tr>
+<tr>
+<td align="left">share</td>
+<td align="left">分享</td>
+</tr>
+<tr>
+<td align="left">show</td>
+<td align="left">显示</td>
+</tr>
+<tr>
+<td align="left">sidebar</td>
+<td align="left">边栏，侧栏</td>
+</tr>
+<tr>
+<td align="left">slide</td>
+<td align="left">幻灯片，图片切换</td>
+</tr>
+<tr>
+<td align="left">sort</td>
+<td align="left">排序</td>
+</tr>
+<tr>
+<td align="left">sub</td>
+<td align="left">次级的，子级的</td>
+</tr>
+<tr>
+<td align="left">submit</td>
+<td align="left">提交</td>
+</tr>
+<tr>
+<td align="left">subscribe</td>
+<td align="left">订阅</td>
+</tr>
+<tr>
+<td align="left">subtitle</td>
+<td align="left">副标题</td>
+</tr>
+<tr>
+<td align="left">success</td>
+<td align="left">成功（提示）</td>
+</tr>
+<tr>
+<td align="left">summary</td>
+<td align="left">摘要</td>
+</tr>
+<tr>
+<td align="left">tab</td>
+<td align="left">标签页</td>
+</tr>
+<tr>
+<td align="left">table</td>
+<td align="left">表格</td>
+</tr>
+<tr>
+<td align="left">txt,text</td>
+<td align="left">文本</td>
+</tr>
+<tr>
+<td align="left">thumbnail</td>
+<td align="left">缩略图</td>
+</tr>
+<tr>
+<td align="left">time</td>
+<td align="left">时间</td>
+</tr>
+<tr>
+<td align="left">tips</td>
+<td align="left">提示</td>
+</tr>
+<tr>
+<td align="left">title</td>
+<td align="left">标题</td>
+</tr>
+<tr>
+<td align="left">video</td>
+<td align="left">视频</td>
+</tr>
+<tr>
+<td align="left">wrap</td>
+<td align="left">容器，包，一般用于最外层</td>
+</tr>
+<tr>
+<td align="left">wrapper</td>
+<td align="left">容器，包，一般用于最外层</td>
+</tr>
+</tbody></table>
+<p>不使用 ID 选择器</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line"><span class="selector-id">#title</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line"><span class="selector-class">.title</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不要为  <code>0</code>  值设置单位</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">0px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>遵循以下的样式书写顺序</p>
+<ol>
+<li>布局定位属性：position / display / float / clear / visibility / overflow</li>
+<li>盒属性：width / height / margin / padding / border / background</li>
+<li>文本属性：color / font / text-decoration / text-align / vertical-align / white- space / break-word</li>
+<li>视觉属性：background-color / border / border-radius / box-shadow</li>
+<li>其他属性：content / cursor /  text-shadow / background:linear-gradient</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="comment">/* Positioning */</span></span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Box-model */</span></span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Typography */</span></span><br><span class="line">  <span class="attribute">font</span>: normal <span class="number">13px</span> <span class="string">'Helvetica Neue'</span>, sans-serif;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Visual */</span></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#f5f5f5</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e5e5e5</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Misc */</span></span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>嵌套选择器的深度不要超过 3 层</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  .content &#123;</span><br><span class="line">    <span class="selector-class">.profile</span> &#123;</span><br><span class="line">      <span class="comment">/* STOP! */</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不要使用 <code>@import</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/* bad */ @import url("other.css"); /* good */</span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"other.css"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>将媒体查询语句放在靠近相关规则最近的位置</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.element-avatar</span> &#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.element-selected</span> &#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width:</span> <span class="number">480px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.element-avatar</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.element-selected</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用简短的申明语句</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">padding-top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">padding-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">padding-right</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 stylelint 检查样式代码</p>
+<p><a href="https://github.com/shinnn/vscode-stylelint" target="_blank" rel="noopener">https://github.com/shinnn/vscode-stylelint</a></p>
+<h2 id="JS-规范"><a href="#JS-规范" class="headerlink" title="JS 规范"></a>JS 规范</h2><p>使用 const 优于 let，弃用 var</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'jack'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myVariable = <span class="string">'myVariable'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> FIRST_US_PRESIDENT = <span class="string">'George Washington'</span></span><br></pre></td></tr></table></figure>
+
+<p>使用字面量创建对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> <span class="built_in">Object</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数名或方法名使用动宾短语</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">userInfo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserInfo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>命名所有的方法包含闭包和回调, 避免匿名方法</p>
+<p>命名方法和函数可以让你在代码运行出错时更快的找到错误</p>
+<p>布尔值变量使用 is 开头的词组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">const</span> finished = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> isFinished = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>避免重复的描述对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">const</span> car = &#123;</span><br><span class="line">  carMake: <span class="string">'Honda'</span>,</span><br><span class="line">  carModel: <span class="string">'Accord'</span>,</span><br><span class="line">  carColor: <span class="string">'Blue'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> Car = &#123;</span><br><span class="line">  make: <span class="string">'Honda'</span>,</span><br><span class="line">  model: <span class="string">'Accord'</span>,</span><br><span class="line">  color: <span class="string">'Blue'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用有意义可读性好的变量名</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">const</span> yyyymmdstr = moment().format(<span class="string">'YYYY/MM/DD'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">525600</span>; i++) &#123;</span><br><span class="line">  runCronJob()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> yearMonthDay = moment().format(<span class="string">'YYYY/MM/DD'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MINUTES_IN_A_YEAR = <span class="number">525600</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; MINUTES_IN_A_YEAR; i++) &#123;</span><br><span class="line">  runCronJob()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将函数参数限制 2 个以内</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMenu</span>(<span class="params">title, body, buttonText, cancellable</span>) </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> menuConfig = &#123;</span><br><span class="line">  title: <span class="string">'Foo'</span>,</span><br><span class="line">  body: <span class="string">'Bar'</span>,</span><br><span class="line">  buttonText: <span class="string">'Baz'</span>,</span><br><span class="line">  cancellable: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMenu</span>(<span class="params">menuConfig</span>) </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>封装判断条件</p>
+<p>将多个条件的判断结果赋值给一个变量或使用一个函数返回</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">if</span> (fsm.state === <span class="string">'fetching'</span> &amp;&amp; isEmpty(listNode)) &#123;</span><br><span class="line">  <span class="comment">/// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shouldShowSpinner</span>(<span class="params">fsm, listNode</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fsm.state === <span class="string">'fetching'</span> &amp;&amp; isEmpty(listNode)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (shouldShowSpinner(fsmInstance, listNodeInstance)) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>避免否定情况的判断</p>
+<p>尽可能只使用正向的判断</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">if</span>(!isLoading) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">if</span>(isLoading) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>删除无效的代码</p>
+<p>及时删除不再被调用的代码，避免给阅读代码带来困扰</p>
+<p>使用 <code>try/catch</code>  语句捕获可能出现的错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  functionThatMightThrow()</span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">  <span class="comment">// 不单单只是使用 console</span></span><br><span class="line">  <span class="built_in">console</span>.error(error)</span><br><span class="line">  <span class="comment">// 更多的错误处理</span></span><br><span class="line">  notifyUserOfError(error)</span><br><span class="line">  <span class="comment">// 报告错误</span></span><br><span class="line">  reportErrorToService(error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只注释业务逻辑复杂性的代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hashIt</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> hash = <span class="number">0</span></span><br><span class="line">  <span class="keyword">var</span> length = data.length</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> char = data.charCodeAt(i)</span><br><span class="line">    hash = (hash &lt;&lt; <span class="number">5</span>) - hash + char</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Convert to 32-bit integer</span></span><br><span class="line">    hash = hash &amp; hash</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Vue-规范"><a href="#Vue-规范" class="headerlink" title="Vue 规范"></a>Vue 规范</h2><p>将组件名命名为多个单词</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">todo.vue</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">todo-item.vue</span><br></pre></td></tr></table></figure>
+
+<p>使用 PascalCase 或者 kebab-case 命名组件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- bad  --&gt;</span></span><br><span class="line">components/ |- mycomponent.vue components/ |- myComponent.vue</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- good --&gt;</span></span><br><span class="line">components/ |- MyComponent.vue components/ |- my-component.vue</span><br></pre></td></tr></table></figure>
+
+<p>详细定义组件的  Prop</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">props: [<span class="string">'status'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line">props: &#123;</span><br><span class="line">   status: &#123;</span><br><span class="line">    type: <span class="built_in">String</span>,</span><br><span class="line">    required: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 v-for 循环上加 key</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- bad --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"todo in todos"</span>&gt;</span></span><br><span class="line">  &#123;&#123; todo.text &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- good --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"todo in todos"</span> <span class="attr">:key</span>=<span class="string">"todo.id"</span>&gt;</span></span><br><span class="line">  &#123;&#123; todo.text &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不要把  v-if  和  v-for  同时用在同一个元素上</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- bad --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"user in users"</span> <span class="attr">v-if</span>=<span class="string">"shouldShowUsers"</span> <span class="attr">:key</span>=<span class="string">"user.id"</span>&gt;</span></span><br><span class="line">    &#123;&#123; user.name &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- good --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">v-if</span>=<span class="string">"shouldShowUsers"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"user in users"</span> <span class="attr">:key</span>=<span class="string">"user.id"</span>&gt;</span></span><br><span class="line">    &#123;&#123; user.name &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为组件样式设置作用域</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- bad --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-close"</span>&gt;</span>X<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.btn-close</span> &#123;</span></span><br><span class="line">    background-color: red;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--  good --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"c-button c-button--close"</span>&gt;</span>X<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 使用 BEM 约定 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.c-button</span> &#123;</span></span><br><span class="line">    border: none;</span><br><span class="line">    border-radius: 2px;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">  <span class="selector-class">.c-button--close</span> &#123;</span></span><br><span class="line">    background-color: red;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>组件和实例的选项使用统一的顺序</strong></p>
+<ol>
+<li><strong>副作用</strong>(触发组件外的影响)</li>
+</ol>
+<ul>
+<li><code>el</code></li>
+</ul>
+<ol start="2">
+<li><strong>全局感知</strong>(要求组件以外的知识)</li>
+</ol>
+<ul>
+<li><code>name</code></li>
+<li><code>parent</code></li>
+</ul>
+<ol start="3">
+<li><strong>组件类型</strong>(更改组件的类型)</li>
+</ol>
+<ul>
+<li><code>functional</code></li>
+</ul>
+<ol start="4">
+<li><strong>模板修改器</strong>(改变模板的编译方式)</li>
+</ol>
+<ul>
+<li><code>delimiters</code></li>
+<li><code>comments</code></li>
+</ul>
+<ol start="5">
+<li><strong>模板依赖</strong>(模板内使用的资源)</li>
+</ol>
+<ul>
+<li><code>components</code></li>
+<li><code>directives</code></li>
+<li><code>filters</code></li>
+</ul>
+<ol start="6">
+<li><strong>组合</strong>(向选项里合并属性)</li>
+</ol>
+<ul>
+<li><code>extends</code></li>
+<li><code>mixins</code></li>
+</ul>
+<ol start="7">
+<li><strong>接口</strong>(组件的接口)</li>
+</ol>
+<ul>
+<li><code>inheritAttrs</code></li>
+<li><code>model</code></li>
+<li><code>props</code>/<code>propsData</code></li>
+</ul>
+<ol start="8">
+<li><strong>本地状态</strong>(本地的响应式属性)</li>
+</ol>
+<ul>
+<li><code>data</code></li>
+<li><code>computed</code></li>
+</ul>
+<ol start="9">
+<li><strong>事件</strong>(通过响应式事件触发的回调)</li>
+</ol>
+<ul>
+<li><code>watch</code></li>
+<li>生命周期钩子 (按照它们被调用的顺序)<ul>
+<li><code>beforeCreate</code></li>
+<li><code>created</code></li>
+<li><code>beforeMount</code></li>
+<li><code>mounted</code></li>
+<li><code>beforeUpdate</code></li>
+<li><code>updated</code></li>
+<li><code>activated</code></li>
+<li><code>deactivated</code></li>
+<li><code>beforeDestroy</code></li>
+<li><code>destroyed</code></li>
+</ul>
+</li>
+</ul>
+<ol start="10">
+<li><strong>非响应式的属性</strong>(不依赖响应系统的实例属性)</li>
+</ol>
+<ul>
+<li><code>methods</code></li>
+</ul>
+<ol start="11">
+<li><strong>渲染</strong>(组件输出的声明式描述)</li>
+</ol>
+<ul>
+<li><code>template</code>/<code>render</code></li>
+<li><code>renderError</code></li>
+</ul>
+<p><strong>元素和组件的特性使用统一的顺序</strong></p>
+<ol>
+<li><strong>定义</strong>(提供组件的选项)</li>
+</ol>
+<ul>
+<li><code>is</code></li>
+</ul>
+<ol start="2">
+<li><strong>列表渲染</strong>(创建多个变化的相同元素)</li>
+</ol>
+<ul>
+<li><code>v-for</code></li>
+</ul>
+<ol start="3">
+<li><strong>条件渲染</strong>(元素是否渲染/显示)</li>
+</ol>
+<ul>
+<li><code>v-if</code></li>
+<li><code>v-else-if</code></li>
+<li><code>v-else</code></li>
+<li><code>v-show</code></li>
+<li><code>v-cloak</code></li>
+</ul>
+<ol start="4">
+<li><strong>渲染方式</strong>(改变元素的渲染方式)</li>
+</ol>
+<ul>
+<li><code>v-pre</code></li>
+<li><code>v-once</code></li>
+</ul>
+<ol start="5">
+<li><strong>全局感知</strong>(需要超越组件的知识)</li>
+</ol>
+<ul>
+<li><code>id</code></li>
+</ul>
+<ol start="6">
+<li><strong>唯一的特性</strong>(需要唯一值的特性)</li>
+</ol>
+<ul>
+<li><code>ref</code></li>
+<li><code>key</code></li>
+<li><code>slot</code></li>
+</ul>
+<ol start="7">
+<li><strong>双向绑定</strong>(把绑定和事件结合起来)</li>
+</ol>
+<ul>
+<li><code>v-model</code></li>
+</ul>
+<ol start="8">
+<li><strong>其它特性</strong> (所有普通的绑定或未绑定的特性)<br /></li>
+<li><strong>事件</strong>(组件事件监听器)</li>
+</ol>
+<ul>
+<li><code>v-on</code></li>
+</ul>
+<ol start="10">
+<li><strong>内容</strong>(覆写元素的内容)</li>
+</ol>
+<ul>
+<li><code>v-html</code></li>
+<li><code>v-text</code></li>
+</ul>
+<p>保证一个组件专注于解决一个问题</p>
+<p>确保一个组件是独立的、可复用的、微小的和可测试的</p>
+<p>将行内表达式转为  computed</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">    &#123;&#123; (new Date()).getUTCFullYear() &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">    &#123;&#123; year &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    computed: &#123;</span><br><span class="line">      year() &#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>().getUTCFullYear()</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>尽可能使用 mixins</p>
+<p>Mixins 封装可重用的代码，避免了重复。如果两个组件共享有相同的功能，则可以使用 mixin</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HelloMixin = &#123;</span><br><span class="line">	methods: &#123;</span><br><span class="line">  	hello() &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="string">'hello'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CompA</span></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">import</span> HelloMixin <span class="keyword">from</span> <span class="string">'./HelloMixin'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">'CompA'</span>,</span><br><span class="line">    mixins: [HelloMixin]</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ CompB</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  import HelloMixin from './</span>HelloMixin<span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  export default &#123;</span></span><br><span class="line"><span class="string">    name: '</span>CompB<span class="string">',</span></span><br><span class="line"><span class="string">    mixins: [HelloMixin]</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Node-规范"><a href="#Node-规范" class="headerlink" title="Node 规范"></a>Node 规范</h2><p>require 文件夹，而不是文件</p>
+<p>在一个文件夹中开发库/模块，放置一个文件 index.js 暴露模块的内部</p>
+<p>使用 .npmrc 锁住依赖版本</p>
+<p>代码必须在所有的环境中是相同的，但是 Npm 默认情况下会拿包的最新版本，配置 .npmrc 锁定依赖版本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save-exact=true</span><br></pre></td></tr></table></figure>
+
+<p>在 Node 外管理前端资源</p>
+<p>使用专门的中间件（nginx，S3，CDN）服务前端内容，这是因为在处理大量静态文件的时候，由于 node 的单线程模型，它的性能很受影响</p>
+<p>使用中间件限制并发请求</p>
+<p>DOS 攻击非常流行而且相对容易处理。使用外部服务，比如 cloud 负载均衡, cloud 防火墙, nginx, 或者（对于小的，不是那么重要的 app）一个速率限制中间件(比如<a href="https://www.npmjs.com/package/express-rate-limit" target="_blank" rel="noopener">express-rate-limit</a>)，来实现速率限制。否则应用程序可能受到攻击, 导致拒绝服务, 在这种情况下, 真实用户会遭受服务降级或不可用。</p>
+<p>验证传入的 JSON schemas</p>
+<p>验证传入请求的 body payload，并确保其符合预期要求, 如果没有, 则快速报错。为了避免每个路由中繁琐的验证编码, 您可以使用基于 JSON 的轻量级验证架构，比如  <a href="https://www.npmjs.com/package/jsonschema" target="_blank" rel="noopener">jsonschema</a> or <a href="https://www.npmjs.com/package/joi" target="_blank" rel="noopener">joi</a>，否则您疏忽和宽松的方法大大增加了攻击面, 并鼓励攻击者尝试许多输入, 直到他们找到一些组合, 使应用程序崩溃。</p>
+<p>使用非 root 用户运行 Node.js</p>
+<p>Node.js 作为一个具有无限权限的 root 用户运行，这是一种普遍的情景。例如，在 Docker 容器中，这是默认行为。建议创建一个非 root 用户，并保存到 Docker 镜像中（下面给出了示例），或者通过调用带有”-u username” 的容器来代表此用户运行该进程，否则在服务器上运行脚本的攻击者在本地计算机上获得无限制的权利 (例如，改变 iptable，引流到他的服务器上)</p>
+<h2 id="其它规范"><a href="#其它规范" class="headerlink" title="其它规范"></a>其它规范</h2><p>使用 jest 进行单元测试</p>
+<p>通常只要求对一些基础/底层的组件、函数进行测试, 视情况考虑是否要测试业务代码</p>
+<p>使用 <a href="https://link.juejin.im/?target=https%3A%2F%2Fprettier.io">Prettier</a>  格式化代码</p>
+<p><br />所有代码格式相关的工作都可以交给 Prettier 来做</p>
+<p>合理的图片命名</p>
+<p>图片业务 + 图片功能类别 + 图片模块名称 + 图片精度</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://codeguide.co" target="_blank" rel="noopener">Code Guide</a></li>
+<li><a href="https://guide.aotu.io/" target="_blank" rel="noopener">O2 前端规范文档</a></li>
+<li><a href="https://github.com/alivebao/clean-code-js" target="_blank" rel="noopener">JavaScript 风格指南</a></li>
+<li><a href="https://cn.vuejs.org/v2/style-guide/" target="_blank" rel="noopener">Vue  风格指南</a></li>
+<li><a href="https://github.com/pablohpsilva/vuejs-component-style-guide/blob/master/README-CN.md" target="_blank" rel="noopener">Vue.js 组件编码规范</a></li>
+<li><a href="https://github.com/goldbergyoni/nodebestpractices/blob/master/README.chinese.md" target="_blank" rel="noopener">Node.js 最佳实践</a></li>
+</ul></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2019/10/25/docker-arg-vs-env/"
+      title="Docker ARG vs ENV"
+    >
+      &larr;&nbsp;Docker ARG vs ENV
+    </a>
+     
+    <a
+      class=""
+      href="/post/2019/10/05/js-intl/"
+      title="使用 Intl 对象进行日期时间格式化"
+    >
+      使用 Intl 对象进行日期时间格式化&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

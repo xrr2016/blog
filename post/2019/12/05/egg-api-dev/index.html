@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/egg.jpg" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">Egg.js 上传接口开发总结</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;9
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>要在浏览器端将文件上传到阿里的 OSS 对象存储，需要用到阿里云提供的 <a href="https://github.com/ali-sdk/ali-oss" target="_blank" rel="noopener">SDK</a>，但是这样会在前端暴露 OSS 的 <code>accessKeyId</code> 和 <code>accessKeySecret</code>，这是不安全的。所以需要一个文件上传接口把前端传过来的文件上传到对象存储里面，最初只支持阿里云，之后可能会支持其它的云服务商比如七牛云。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><p>后端框架用的是 Egg.js，因为比较熟悉。然后这只是一个文件上传的服务，一个路由就行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">`/<span class="subst">$&#123;app.name&#125;</span>/v1/upload`</span>, controller.oss.upload)</span><br></pre></td></tr></table></figure>
+
+<p>然后实现对应的 <code>OssController</code> 的 <code>upload</code> 方法，一般的实践是在 <code>Controller</code> 层进行参数校验，这里用内置的是 <code>egg-validate</code> 插件进行校验。假如有两个参数 <code>folder</code> 和 <code>bucket</code> 代表文件上传的目录和 <code>bucket</code>，那么验证代码如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> body = ctx.request.body</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rules = &#123;</span><br><span class="line">  folder: &#123; <span class="attr">type</span>: <span class="string">'string'</span>, <span class="attr">required</span>: <span class="literal">false</span>, <span class="attr">default</span>: <span class="string">'/'</span>, <span class="attr">trim</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  bucket: &#123; <span class="attr">type</span>: <span class="string">'string'</span>, <span class="attr">required</span>: <span class="literal">false</span>, <span class="attr">default</span>:  <span class="string">'you-bucket-name'</span> &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> ctx.validate(rules, body)</span><br></pre></td></tr></table></figure>
+
+<p>接受前端的上传文件用的是 <a href="https://github.com/eggjs/egg-multipart" target="_blank" rel="noopener">egg-multipart</a> 插件，这个插件有两种模式 <code>file</code> 和 <code>stream</code>，<code>file</code> 模式适合简单的文件上传，这种模式会先将前端传来的图片存到服务器上，执行完操作后需要用 <code>ctx.cleanupRequestFiles()</code> 方法将文件删除。 <code>stream</code> 模式适合在对上传文件进一步处理的时候使用，如压缩，解压等，如果上传文件是图片那么可以将这个流传递给处理图片的库进行处理。</p>
+<p>在 <code>config.default.js</code> 配置 <code>egg-multipart</code> 插件，在 <code>fileExtensions</code> 新增需要添加的文件类型扩展名，<code>cleanSchedule</code> 配置定时清除零时保存的文件。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config.multipart = &#123;</span><br><span class="line">  mode: <span class="string">'file'</span>,</span><br><span class="line">  fileSize: <span class="string">'50mb'</span>,</span><br><span class="line">  tmpdir: path.join(os.tmpdir(), <span class="string">'egg-multipart-tmp'</span>, appInfo.name),</span><br><span class="line">  cleanSchedule: &#123;</span><br><span class="line">    cron: <span class="string">'0 30 4 * * *'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  fileExtensions: [ <span class="string">'.pdf'</span>, <span class="string">'.doc'</span>, <span class="string">'.docx'</span> ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后用 <code>ctx.request.files</code> 获取请求过来的文件，这里也需要进行验证请求是否有文件，校验好请求参数后就把请求参数传到 <code>Services</code> 层里</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> files = ctx.request.files</span><br><span class="line"><span class="keyword">const</span> body = ctx.request.body</span><br><span class="line">...</span><br><span class="line">ctx.body = <span class="keyword">await</span> ctx.service.oss.upload(body, files)</span><br></pre></td></tr></table></figure>
+
+<p>对应的 <code>OssService</code> 是负责主要的任务地方，新建 <code>OSS</code> 实例对象，上传文件，设置上传文件的请求头，返回上传结果。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> fs <span class="keyword">from</span> <span class="string">'fs'</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> OSS <span class="keyword">from</span> <span class="string">'ali-oss'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ONE_YEAR = <span class="number">3600</span> * <span class="number">24</span> * <span class="number">365</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * OssService</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> OssService <span class="keyword">extends</span> Service &#123;</span><br><span class="line">  <span class="keyword">private</span> client</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> createClient(option) &#123;</span><br><span class="line">      <span class="keyword">this</span>.client = <span class="keyword">new</span> OSS(&#123;&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">async</span> uploadFile(dir, file) &#123;</span><br><span class="line">    <span class="keyword">let</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> filename = file.filename.replace(<span class="regexp">/\.(\w+)$/</span>, <span class="string">`-<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>.$1`</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      result = <span class="keyword">await</span> <span class="keyword">this</span>.client.put(<span class="string">`<span class="subst">$&#123;dir&#125;</span><span class="subst">$&#123;filename&#125;</span>`</span>, file.filepath, &#123;</span><br><span class="line">        headers: &#123; <span class="string">'Cache-Control'</span>: <span class="string">`max-age=<span class="subst">$&#123;ONE_YEAR&#125;</span>`</span>, <span class="string">'Content-Disposition'</span>: <span class="string">''</span> &#125;,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      <span class="keyword">this</span>.ctx.logger.error(<span class="keyword">new</span> <span class="built_in">Error</span>(e.message))</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(e.message)</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      fs.unlink(file.filepath, <span class="function"><span class="params">()</span> =&gt;</span> <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> upload(parmas, files) &#123;</span><br><span class="line">    <span class="keyword">this</span>.createClient(parmas)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (files.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      result = []</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> file of files) &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="keyword">this</span>.uploadFile(parmas.dir, file)</span><br><span class="line"></span><br><span class="line">        result.push(&#123; url: res.url &#125;)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> file = files[<span class="number">0</span>]</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="keyword">this</span>.uploadFile(parmas.dir, file)</span><br><span class="line"></span><br><span class="line">      result = &#123; url: res.url &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此上传文件到 OSS 接口基本完成了</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>Egg.js 集成了 <a href="https://github.com/visionmedia/supertest" target="_blank" rel="noopener">SuperTest</a> 测试框架，所以写接口的单元测试很方便。这个接口主要是对 <code>Controller</code> 层请求参数进行测试。测试代码写在项目目录 <code>test/app/controller/oss.test.ts</code> 文件内。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; app, assert &#125; <span class="keyword">from</span> <span class="string">'egg-mock/bootstrap'</span></span><br><span class="line"></span><br><span class="line">describe(<span class="string">'测试 oss controller'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  it(<span class="string">'不再白名单的 bucket 名返回错误'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> app.httpRequest()</span><br><span class="line">      .post(<span class="string">'/upload-server/v1/upload'</span>)</span><br><span class="line">      .set(<span class="string">'Content-type'</span>, <span class="string">'multipart/form-data; boundary=--------------------------820317025826519383208825'</span>)</span><br><span class="line">      .field(<span class="string">'bucket'</span>, <span class="string">'wrong-bucket'</span>)</span><br><span class="line">      .expect(<span class="number">403</span>)</span><br><span class="line"></span><br><span class="line">    assert(result.body)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'上传文件成功'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> app.httpRequest()</span><br><span class="line">      .post(<span class="string">'/upload-server/v1/upload'</span>)</span><br><span class="line">      .set(<span class="string">'Content-type'</span>, <span class="string">'multipart/form-data; boundary=--------------------------820317025826519383208825'</span>)</span><br><span class="line">      .field(<span class="string">'dir'</span>, <span class="string">'images'</span>)</span><br><span class="line">      .attach(<span class="string">'avatar'</span>, <span class="string">'test/app/controller/avatar.png'</span>)</span><br><span class="line">      .expect(<span class="number">200</span>)</span><br><span class="line"></span><br><span class="line">    assert(result.body)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>Egg.js 本身部署十分的方便，只需要在服务器上运行以下命令即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egg-scripts start --daemon --env=prod --title=upload-server</span><br></pre></td></tr></table></figure>
+
+<p>但是将这个服务变成一个 <code>Docker</code> <code>iamge</code> 就更方便了</p>
+<blockquote>
+<p>注意:<br>要用 <code>Docker</code> 运行 Egg 服务需要将 <code>package.json</code> 中 <code>scripts</code> 的 <code>start</code> 命令去掉 <code>--daemon</code> 参数，变成<br><code>egg-scripts start --env=prod --title=upload-server</code><br>因为在 <code>Docker</code> 运行 Egg 应用需要是前台模式运行</p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:lts-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置时区</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk --update add tzdata \</span></span><br><span class="line"><span class="bash">    &amp;&amp; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span></span><br><span class="line"><span class="bash">    &amp;&amp; <span class="built_in">echo</span> <span class="string">"Asia/Shanghai"</span> &gt; /etc/timezone \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apk del tzdata</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /upload-server</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /upload-server</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm run tsc &amp;&amp; npm prune --production</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">7001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> npm start</span></span><br></pre></td></tr></table></figure>
+
+<p>有了镜像后，写一个运行容器的脚本，添加可执行的权限，之后启动服务就可以只用运行这个脚本即可。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line">IMAGE_NAME=<span class="string">"upload-server"</span></span><br><span class="line">CONTAINER_NAME=<span class="string">"upload-server"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'拉取代码'</span></span><br><span class="line"></span><br><span class="line">git pull origin master</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'运行容器'</span></span><br><span class="line"></span><br><span class="line">docker rm -f <span class="variable">$&#123;CONTAINER_NAME&#125;</span> || <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">docker build -t <span class="variable">$&#123;IMAGE_NAME&#125;</span> .</span><br><span class="line"></span><br><span class="line">docker run -d -p 7001:7001 --env-file .env --name=<span class="variable">$&#123;CONTAINER_NAME&#125;</span> <span class="variable">$&#123;IMAGE_NAME&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./deploy.sh</span><br></pre></td></tr></table></figure>
+
+<p>运行脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./deploy.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="请求频率限制"><a href="#请求频率限制" class="headerlink" title="请求频率限制"></a>请求频率限制</h2><p>为了防止接口被滥用需要限制请求接口的频率，在 Github 找到一个 <a href="https://github.com/koajs/ratelimit" target="_blank" rel="noopener">koa-ratelimit</a> 的仓库，由于 Egg.js 支持 Koa 的插件，所以也适合。</p>
+<p>参考这个仓库的文档，在项目 <code>middleware</code> 文件添加一个 <code>ratelimit.ts</code>，用这个中间件来控制，一开始使用的 <code>redis</code> 作为 <code>driver</code> 可是遇到一个 <code>docker-compose</code> 网络链接问题始终无法解决，遂放弃，改用内存模式。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Redis <span class="keyword">from</span> <span class="string">'ioredis'</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> ratelimit <span class="keyword">from</span> <span class="string">'koa-ratelimit'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> db = <span class="keyword">new</span> Map();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> ratelimit(&#123;</span><br><span class="line">    db: db,</span><br><span class="line">    driver: <span class="string">'memory'</span>,</span><br><span class="line">    duration: <span class="number">60000</span>,</span><br><span class="line">    errorMessage: <span class="string">'请求次数超过限制'</span>,</span><br><span class="line">    id: <span class="function"><span class="params">ctx</span> =&gt;</span> ctx.ip,</span><br><span class="line">    headers: &#123;</span><br><span class="line">      remaining: <span class="string">'Upload-Limit-Remaining'</span>,</span><br><span class="line">      reset: <span class="string">'Uplaod-Limit-Reset'</span>,</span><br><span class="line">      total: <span class="string">'Upload-Limit-Total'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    max: <span class="number">300</span>,</span><br><span class="line">    disableHeader: <span class="literal">false</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p><strong><em>上传到 OSS 的图片在浏览器无法预览变为下载</em></strong></p>
+<p>首先阿里云规定</p>
+<blockquote>
+<p>对于图片文件（在未修改文件http头的情况下）：<br>若您的Bucket是2019年9月23日前创建的，使用OSS默认访问域名或自有域名生成的文件URL从浏览器访问时可以预览文件内容。<br>若您的Bucket是2019年9月23日后创建的，使用OSS默认域名生成的文件URL从浏览器访问时会以附件形式下载；使用自有域名生成的文件URL访问时，可以预览&gt; 文件内容。绑定自有域名步骤请参见绑定自定义域名。</p>
+</blockquote>
+<p>然后是上传的图片不能添加 <code>Content-Disposition</code> 返回头信息，给文件添加了这个 http 返回头，也会让图片变成下载。</p>
+<hr>
+<p><strong><em><code>egg-multipart</code> 插件使用 <code>stream</code> 模式无法获取请求体传过来的参数</em></strong></p>
+<p>用 <code>file</code> 模式能够正确的拿到 <code>ctx.request.body</code> 里的请求参数，但是将使用 <code>stream</code> 模式就无法获取，搜索了一下后发现使用 <code>stream</code> 模式需要将上传文件放到表单的最后一项去，不然拿不到其它参数。</p>
+<blockquote>
+<p><a href="https://eggjs.org/zh-cn/basics/controller.html#%E8%8E%B7%E5%8F%96%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6" target="_blank" rel="noopener">https://eggjs.org/zh-cn/basics/controller.html#%E8%8E%B7%E5%8F%96%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6</a><br>只支持上传一个文件。<br>上传文件必须在所有其他的 fields 后面，否则在拿到文件流时可能还获取不到 fields。</p>
+</blockquote>
+<hr>
+<p><strong><em>Redis 无法链接问题</em></strong></p>
+<p>用以下的 <code>docker-compose.yml</code> 文件启动 Egg.js 应用和一个 <code>Redis</code> 服务，然后想在上传接口的请求频率限制的中间件中使用这个 <code>Redis</code> 服务，然后一直报链接失败…Google 之后试了几种方法依然没有成功 :sad:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:alpine</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"6379:6379"</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">       <span class="bullet">-</span> <span class="string">upload-server-network</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">upload_server:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">upload_server</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EGG_SERVER_ENV:prod</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">7001</span><span class="string">:7001</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">upload-server-network</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">upload-server-network:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">bridge</span></span><br><span class="line"></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong><em>Egg.js 全局错误处理返回格式问题</em></strong></p>
+<p>Egg.js 本身有一个全局错误处理的插件 <a href="https://github.com/eggjs/egg-onerror" target="_blank" rel="noopener">egg-onerror</a>，但是用这个插件在处理上传文件的异常时，直接 <code>throw</code> 错误，返回给前端的数据格式是文本类型的，不是 json 格式，除非前端在发送请求的添加 <code>Accept: application/json</code> 请求头信息。<br>只能在 <code>config.default.js</code> 使用 <code>all</code> 进行捕获异常，然后用 <code>JSON.stringify</code> 方法在处理一遍，这样 <code>throw new Error(e.message)</code> 的时候返回给前端的才是 json。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">config.onerror = &#123;</span><br><span class="line">  all(err, ctx) &#123;</span><br><span class="line">    ctx.status = err.status || <span class="number">500</span></span><br><span class="line"></span><br><span class="line">    ctx.body = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      code: ctx.status,</span><br><span class="line">      success: <span class="literal">false</span>,</span><br><span class="line">      message: err.message,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终还是没有使用这个插件，自己添加了一个方法，进行异常捕获。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> error(msg) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; ctx &#125; = <span class="keyword">this</span></span><br><span class="line"></span><br><span class="line">  ctx.status = <span class="number">400</span></span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    code: ctx.status,</span><br><span class="line">    success: <span class="literal">false</span>,</span><br><span class="line">    message: msg,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.error(<span class="string">'错误的 bucket'</span>)</span><br><span class="line"><span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<hr></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2019/12/10/flutter-route-transition/"
+      title="Flutter 创建自定义路由过渡动画"
+    >
+      &larr;&nbsp;Flutter 创建自定义路由过渡动画
+    </a>
+     
+    <a
+      class=""
+      href="/post/2019/11/20/flutter-carousel/"
+      title="使用 Flutter 实现一个走马灯布局"
+    >
+      使用 Flutter 实现一个走马灯布局&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

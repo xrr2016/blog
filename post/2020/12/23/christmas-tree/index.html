@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/christmas-tree/tree.png" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">画一颗圣诞树🎄</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;4
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>新建页面，添加一个 <code>canvas</code> 元素，引入 css, js 文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Christmas Tree<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"tree"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./index.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">canvas</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>);</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#fefdfd</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">2px</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CANVAS_WIDTH = <span class="number">360</span></span><br><span class="line"><span class="keyword">const</span> CANVAS_HEIGHT = <span class="number">620</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initCanvas</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(id)</span><br><span class="line">  canvas.width = CANVAS_WIDTH</span><br><span class="line">  canvas.height = CANVAS_HEIGHT</span><br><span class="line">  <span class="keyword">return</span> canvas</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = initCanvas(<span class="string">'tree'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, main)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="画树枝"><a href="#画树枝" class="headerlink" title="画树枝"></a>画树枝</h2><p>使用 <code>stroke</code> 方法绘制树枝，设置旋转角度绘制左右子树，保存状态，递归绘制子树。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = initCanvas(<span class="string">'tree'</span>)</span><br><span class="line">  <span class="comment">// 树的起始位置</span></span><br><span class="line">  <span class="keyword">const</span> location = [CANVAS_WIDTH * <span class="number">0.5</span>, CANVAS_HEIGHT]</span><br><span class="line"></span><br><span class="line">  drawBranches(canvas, location, <span class="number">0</span>, <span class="number">100</span>, <span class="number">20</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * canvas       画布</span></span><br><span class="line"><span class="comment"> * start        起始位置</span></span><br><span class="line"><span class="comment"> * angle        旋转角度</span></span><br><span class="line"><span class="comment"> * branchHeight 树枝长度</span></span><br><span class="line"><span class="comment"> * branchWidth  树枝宽度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawBranches</span>(<span class="params">canvas, start, angle, branchHeight, branchWidth</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line">  ctx.save()</span><br><span class="line">  ctx.beginPath()</span><br><span class="line">  <span class="comment">// 将画布原点移动到起始位置</span></span><br><span class="line">  ctx.translate(...start)</span><br><span class="line">  <span class="comment">// 设置绘制颜色</span></span><br><span class="line">  ctx.strokeStyle = <span class="string">'#333'</span></span><br><span class="line">  <span class="comment">// 设置绘制宽度</span></span><br><span class="line">  ctx.lineWidth = branchWidth</span><br><span class="line">  <span class="comment">// 设置旋转角度</span></span><br><span class="line">  ctx.rotate((angle * <span class="built_in">Math</span>.PI) / <span class="number">180</span>)</span><br><span class="line"></span><br><span class="line">  ctx.moveTo(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">  ctx.lineTo(<span class="number">0</span>, -branchHeight)</span><br><span class="line">  ctx.stroke()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (branchHeight &gt; <span class="number">6</span>) &#123;</span><br><span class="line">    <span class="comment">// 绘制右子树</span></span><br><span class="line">    drawBranches(canvas, [<span class="number">0</span>, -branchHeight], <span class="number">35</span>, branchHeight * <span class="number">0.5</span>, branchWidth * <span class="number">0.7</span>)</span><br><span class="line">    <span class="comment">// 绘制左子树</span></span><br><span class="line">    drawBranches(canvas, [<span class="number">0</span>, -branchHeight], <span class="number">-35</span>, branchHeight * <span class="number">0.5</span>, branchWidth * <span class="number">0.7</span>)</span><br><span class="line">    <span class="comment">// 绘制中间的树干</span></span><br><span class="line">    drawBranches(canvas, [<span class="number">0</span>, -branchHeight], <span class="number">0</span>, branchHeight * <span class="number">0.8</span>, branchWidth * <span class="number">0.7</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ctx.restore()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/224563/1608733907096-e7ccfbf1-8ad5-408d-a011-ce128ffef243.png#align=left&display=inline&height=660&margin=%5Bobject%20Object%5D&name=branch.png&originHeight=1320&originWidth=840&size=257047&status=done&style=none&width=420" alt="branch.png"></p>
+<h2 id="画树叶"><a href="#画树叶" class="headerlink" title="画树叶"></a>画树叶</h2><p>获取画布所有像素点 <code>alpha</code> 通道值，判断此处是否有图像，循环像素点数组绘制半圆。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = initCanvas(<span class="string">'tree'</span>)</span><br><span class="line">  <span class="keyword">const</span> location = [CANVAS_WIDTH * <span class="number">0.5</span>, CANVAS_HEIGHT]</span><br><span class="line"></span><br><span class="line">  drawBranches(canvas, location, <span class="number">0</span>, <span class="number">100</span>, <span class="number">20</span>)</span><br><span class="line">  drawLeaves(canvas)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用一个数组保存绘制树的像素点</span></span><br><span class="line"><span class="keyword">const</span> branchPixels = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawLeaves</span>(<span class="params">canvas</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line">  <span class="comment">// 获取画布像素数据</span></span><br><span class="line">  <span class="keyword">const</span> imageData = ctx.getImageData(<span class="number">0</span>, <span class="number">0</span>, CANVAS_WIDTH, CANVAS_HEIGHT)</span><br><span class="line">  <span class="keyword">const</span> data = imageData.data</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> y = <span class="number">0</span>; y &lt; CANVAS_HEIGHT; y++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> x = <span class="number">0</span>; x &lt; CANVAS_WIDTH; x++) &#123;</span><br><span class="line">      <span class="comment">// 获取像素点 alpha 通道值</span></span><br><span class="line">      <span class="keyword">const</span> alpha = data[<span class="number">4</span> * (y * CANVAS_WIDTH + x) + <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果 alpha 值大于 0 说明这个位置有图像；排除基础树干的像素点；</span></span><br><span class="line">      <span class="keyword">if</span> (alpha &gt; <span class="number">0</span> &amp;&amp; y &lt; CANVAS_HEIGHT - <span class="number">100</span>) &#123;</span><br><span class="line">        branchPixels.push([x, y])</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; branchPixels.length; i++) &#123;</span><br><span class="line">    <span class="comment">// 减少绘制几率</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Math</span>.random() &lt; <span class="number">0.3</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> loc = branchPixels[i]</span><br><span class="line">      loc[<span class="number">0</span>] += (<span class="built_in">Math</span>.random() - <span class="number">0.5</span>) * <span class="number">5</span></span><br><span class="line">      loc[<span class="number">1</span>] += (<span class="built_in">Math</span>.random() - <span class="number">0.5</span>) * <span class="number">5</span></span><br><span class="line">      <span class="comment">// 设置绘制颜色，越往外颜色越浅</span></span><br><span class="line">      <span class="keyword">const</span> green = (<span class="number">255</span> * (CANVAS_HEIGHT - loc[<span class="number">1</span>])) / CANVAS_HEIGHT</span><br><span class="line"></span><br><span class="line">      ctx.save()</span><br><span class="line">      ctx.beginPath()</span><br><span class="line">      ctx.translate(...loc)</span><br><span class="line">      ctx.rotate(<span class="built_in">Math</span>.random() * <span class="built_in">Math</span>.PI * <span class="number">2</span>)</span><br><span class="line">      ctx.fillStyle = <span class="string">`rgba(0, <span class="subst">$&#123;green&#125;</span>, 0, .2)`</span></span><br><span class="line">      <span class="comment">// 绘制半圆</span></span><br><span class="line">      ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI)</span><br><span class="line">      ctx.fill()</span><br><span class="line">      ctx.restore()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/224563/1608734737527-08917a38-0a45-496d-9ec9-de9309fbfca0.png#align=left&display=inline&height=660&margin=%5Bobject%20Object%5D&name=leaves.png&originHeight=1320&originWidth=840&size=480606&status=done&style=none&width=420" alt="leaves.png"></p>
+<h2 id="画礼物"><a href="#画礼物" class="headerlink" title="画礼物"></a>画礼物</h2><p>使用 <code>fillText</code> 和 <code>drawImage</code> 方法绘制文字和图片。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = initCanvas(<span class="string">'tree'</span>)</span><br><span class="line">  <span class="keyword">const</span> location = [CANVAS_WIDTH * <span class="number">0.5</span>, CANVAS_HEIGHT]</span><br><span class="line"></span><br><span class="line">  drawBranches(canvas, location, <span class="number">0</span>, <span class="number">100</span>, <span class="number">20</span>)</span><br><span class="line">  drawLeaves(canvas)</span><br><span class="line">  drawGifts(canvas)</span><br><span class="line">  drawStar(canvas)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> gifts = [<span class="string">'🎁'</span>, <span class="string">'🍎'</span>, <span class="string">'🍭'</span>, <span class="string">'🍬'</span>, <span class="string">'🎈'</span>, <span class="string">'🧸'</span>, <span class="string">'🔔'</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawGifts</span>(<span class="params">canvas</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line"></span><br><span class="line">  ctx.save()</span><br><span class="line">  ctx.font = <span class="string">'1.5rem sans-serif'</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// 从树的像素点数组中随机获取位置</span></span><br><span class="line">    <span class="keyword">const</span> location = branchPixels[<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * branchPixels.length)]</span><br><span class="line">    <span class="keyword">const</span> gift = gifts[i % gifts.length]</span><br><span class="line"></span><br><span class="line">    ctx.fillText(gift, ...location)</span><br><span class="line">  &#125;</span><br><span class="line">  ctx.restore()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> image = <span class="keyword">new</span> Image(<span class="number">500</span>, <span class="number">500</span>)</span><br><span class="line">image.src = <span class="string">'star.png'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawStar</span>(<span class="params">canvas</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> size = <span class="number">50</span></span><br><span class="line">  <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line">  <span class="keyword">const</span> loc = [CANVAS_WIDTH * <span class="number">0.5</span> - size / <span class="number">2</span>, <span class="number">80</span>]</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 绘制图片</span></span><br><span class="line">  ctx.drawImage(image, ...loc, size, size)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="./images/christmas-tree/tree.png" alt="cover"></p>
+<p>JUST FOR FUN</p>
+<p><a href="https://github.com/xrr2016/christmas-tree" target="_blank" rel="noopener">源码</a></p></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2021/04/01/js-file-transform/"
+      title="JS 文件转换"
+    >
+      &larr;&nbsp;JS 文件转换
+    </a>
+     
+    <a
+      class=""
+      href="/post/2020/12/13/slate-intro/"
+      title="Slate 介绍分析与实践"
+    >
+      Slate 介绍分析与实践&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>

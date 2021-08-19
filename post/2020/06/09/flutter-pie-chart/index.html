@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#333333" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="google" content="notranslate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="keyword" content="冷石, 前端, 面试，Web, Js, CSS, Node.js, Frontend, Flutter, Docker, Dart, Mysql, Egg.js" />
+  <meta name="description" content="孑然一身，傲立于世" />
+  <title>冷石的博客</title>
+  <base href="/" />
+  <link rel="preconnect" href="//cdn.jsdelivr.net" />
+  <link rel="shortcut icon" href="/icons/icon-72x72.png" />
+  <link
+    rel="apple-touch-icon"
+    href="/icons/icon-192x192.png"
+  />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/atom-one-light.min.css"
+  />
+  <link rel="stylesheet" href="/index.css">
+  <!-- <script
+    data-ad-client="ca-pub-1196485898698315"
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script> -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie_svg.min.js"
+    type="text/javascript"
+  ></script>
+  <script
+    src="https://api.minymon.com/minymon.js"
+    defer
+    type="text/javascript"
+  ></script>
+</head>
+
+  <body>
+    <header class="header">
+  <a class="logo" href="/">
+    <img
+      class="logo-img"
+      src="https://avatars.githubusercontent.com/u/18013127?v=4"
+    />
+  </a>
+  <div class="color" id="color"></div>
+</header>
+
+    <main class=""><article class="container article">
+    
+      <div class="article-cover">
+        <img decoding="async" loading="lazy" src="./images/flutter-pie-chart/cover.png" alt="cover" />
+      </div>
+    
+
+    <h1 class="article-title">Flutter 绘制图表（二）饼状图🍪</h1>
+ 
+    <p class="article-meta">
+      <span class="article-meta-item">
+        最后更新&#58;&nbsp;<time
+          class="post-time"
+          datetime="2021-08-19"
+          >2021-08-19</time
+        >
+      </span>
+      <span class="article-meta-item"
+        >阅读时间&#58;&nbsp;9
+        min</span
+      >
+
+    </p>
+  </section>
+
+  <section class=""><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接上文，本文讲解如何使用 Flutter 绘制饼状图，最终效果如图</p>
+<img src="./images/flutter-pie-chart/pie.gif" width="524" style="width: 260px">
+
+<p><a href="https://dartpad.dartlang.org/b8a2b88647fa75df5d31445a93cb390f" target="_blank" rel="noopener">在线查看</a></p>
+<h2 id="定义-PieChart-amp-PiePart"><a href="#定义-PieChart-amp-PiePart" class="headerlink" title="定义 PieChart &amp; PiePart"></a>定义 PieChart &amp; PiePart</h2><p>第一步定义 <code>PieChart</code> 和 <code>PiePart</code> 类。<code>PieChart</code> 是整个饼状图控件，有 <code>datas</code> 和 <code>legends</code> 两个属性，表示饼图的数据和每部分的标识。<br><code>PiePart</code> 表示饼图的一部分，有 <code>color</code>, <code>startAngle</code>, <code>sweepAngle</code> 三个属性，分别表示颜色，起始弧度值，占据圆形的弧度值。<code>PeiChartPainter</code> 类实现了具体的绘制方法。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PiePart</span> </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> sweepAngle;</span><br><span class="line">  <span class="keyword">final</span> Color color;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> startAngle;</span><br><span class="line"></span><br><span class="line">  PiePart(</span><br><span class="line">    <span class="keyword">this</span>.startAngle,</span><br><span class="line">    <span class="keyword">this</span>.sweepAngle,</span><br><span class="line">    <span class="keyword">this</span>.color,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PieChart</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;<span class="built_in">double</span>&gt; datas;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; legends;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> PieChart(&#123;</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.datas,</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.legends,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _PieChartState createState() =&gt; _PieChartState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_PieChartState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">PieChart</span>&gt; <span class="title">with</span> <span class="title">TickerProviderStateMixin</span> </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> _total = <span class="number">0.0</span>;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;PiePart&gt; _parts = &lt;PiePart&gt;[];</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Column(</span><br><span class="line">      mainAxisAlignment: MainAxisAlignment.center,</span><br><span class="line">      children: [</span><br><span class="line">        Container(</span><br><span class="line">          width: <span class="number">300</span>,</span><br><span class="line">          height: <span class="number">300</span>,</span><br><span class="line">          child: CustomPaint(</span><br><span class="line">            painter: PeiChartPainter(</span><br><span class="line">              total: _total,</span><br><span class="line">              parts: _parts,</span><br><span class="line">              datas: widget.datas,</span><br><span class="line">              legends: widget.legends</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ],</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeiChartPainter</span> <span class="keyword">extends</span> <span class="title">CustomPainter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> total;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;<span class="built_in">double</span>&gt; datas;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;PiePart&gt; parts;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; legends;</span><br><span class="line"></span><br><span class="line">  PeiChartPainter(&#123;</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.total,</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.datas,</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.parts,</span><br><span class="line">    <span class="meta">@required</span> <span class="keyword">this</span>.legends,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">    <span class="comment">// TODO</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="built_in">bool</span> shouldRepaint(PeiChartPainter oldDelegate) =&gt; <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="绘制圆框"><a href="#绘制圆框" class="headerlink" title="绘制圆框"></a>绘制圆框</h2><p>先绘制图表的圆框，在 <code>PeiChartPainter</code> 上添加 <code>drawCircle</code> 方法，以圆的中心点和圆的半径绘制一个空心圆形。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> drawCircle(Canvas canvas, Size size) &#123;</span><br><span class="line">  <span class="keyword">final</span> sw = size.width;</span><br><span class="line">  <span class="keyword">final</span> sh = size.height;</span><br><span class="line">  <span class="comment">// 确定圆的半径</span></span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> radius = math.min(sw, sh) / <span class="number">2</span>;</span><br><span class="line">  <span class="comment">// 定义中心点</span></span><br><span class="line">  <span class="keyword">final</span> Offset center = Offset(sw / <span class="number">2</span>, sh / <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义圆形的绘制属性</span></span><br><span class="line">  <span class="keyword">final</span> paint = Paint()</span><br><span class="line">    ..style = PaintingStyle.stroke</span><br><span class="line">    ..color = Colors.grey</span><br><span class="line">    ..strokeWidth = <span class="number">1.0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 Canvas 的 drawCircle 绘制</span></span><br><span class="line">  canvas.drawCircle(center, radius, paint);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@override</span></span><br><span class="line"><span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">  drawCircle(canvas, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-pie-chart/circle.png" width="520" style="width: 260px">
+
+<h2 id="绘制标识"><a href="#绘制标识" class="headerlink" title="绘制标识"></a>绘制标识</h2><p>这一步需要先在 <code>_PieChartState</code> 里面进行数据的初始化，然后绘制每个数据对应的标识，分以下几步进行</p>
+<ol>
+<li>计算出每个数据占总和的占比</li>
+<li>根据占比计算数据占据圆的弧度值</li>
+<li>根据之前数据占据圆形的弧度值计算出下一个数据的起始弧度值</li>
+<li>根据计算出的起始弧度值和占据弧度值创建 <code>PiePart</code> 对象</li>
+<li>使用 <code>PiePart</code> 对象绘制标识</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_PieChartState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">PieChart</span>&gt; <span class="title">with</span> <span class="title">TickerProviderStateMixin</span> </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> _total = <span class="number">0.0</span>;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;PiePart&gt; _parts = &lt;PiePart&gt;[];</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> initState() &#123;</span><br><span class="line">    <span class="keyword">super</span>.initState();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">List</span>&lt;<span class="built_in">double</span>&gt; datas = widget.datas;</span><br><span class="line">    <span class="comment">// 计算出数据总和</span></span><br><span class="line">    _total = datas.reduce((a, b) =&gt; a + b);</span><br><span class="line">    <span class="comment">// 定义一个起始变量</span></span><br><span class="line">    <span class="built_in">double</span> startAngle = <span class="number">0.0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; datas.length; i++) &#123;</span><br><span class="line">      <span class="keyword">final</span> data = datas[i];</span><br><span class="line">      <span class="comment">// 计算出每个数据所占的弧度值</span></span><br><span class="line">      <span class="keyword">final</span> angle = (data / _total) * -math.pi * <span class="number">2</span>;</span><br><span class="line">      PiePart peiPart;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 下一个数据的起始弧度值等于之前的数据弧度值之和</span></span><br><span class="line">        <span class="built_in">double</span> lastSweepAngle = _parts[i - <span class="number">1</span>].sweepAngle;</span><br><span class="line">        startAngle += lastSweepAngle;</span><br><span class="line">        peiPart = PiePart(startAngle, angle, colors[i]);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 第一个数据的起始弧度为 0.0</span></span><br><span class="line">        peiPart = PiePart(<span class="number">0.0</span>, angle, colors[i]);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 添加到数组中</span></span><br><span class="line">      _parts.add(peiPart);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Column(</span><br><span class="line">      mainAxisAlignment: MainAxisAlignment.center,</span><br><span class="line">      children: [</span><br><span class="line">        Container(</span><br><span class="line">          width: <span class="number">300</span>,</span><br><span class="line">          height: <span class="number">300</span>,</span><br><span class="line">          child: CustomPaint(</span><br><span class="line">            <span class="comment">// 将数据传给 PeiChartPainter</span></span><br><span class="line">            painter: PeiChartPainter(</span><br><span class="line">              total: _total,</span><br><span class="line">              parts: _parts,</span><br><span class="line">              datas: widget.datas,</span><br><span class="line">              legends: widget.legends,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ],</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 PeiChartPainter 上添加 <code>drawLegends</code> 方法，在圆框的外围绘制每部分对应的标识。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> drawLegends(Canvas canvas, Size size) &#123;</span><br><span class="line">  <span class="keyword">final</span> sw = size.width;</span><br><span class="line">  <span class="keyword">final</span> sh = size.height;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> radius = math.min(sw, sh) / <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> fontSize = <span class="number">12.0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; datas.length; i++) &#123;</span><br><span class="line">    <span class="keyword">final</span> PiePart <span class="keyword">part</span> = parts[i];</span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">String</span> legend = legends[i];</span><br><span class="line">    <span class="comment">// 根据每部分的起始弧度加上自身弧度值的一半得到每部分的中间弧度值</span></span><br><span class="line">    <span class="keyword">final</span> radians = <span class="keyword">part</span>.startAngle + <span class="keyword">part</span>.sweepAngle / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 根据三角函数计算中出标识文字的 x 和 y 位置，需要加上宽和高的一半适配 Canvas 的坐标</span></span><br><span class="line">    <span class="built_in">double</span> x = math.cos(radians) * (radius + <span class="number">32</span>) + sw / <span class="number">2</span> - fontSize;</span><br><span class="line">    <span class="built_in">double</span> y = math.sin(radians) * (radius + <span class="number">32</span>) + sh / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">final</span> offset = Offset(x, y);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 TextPainter 绘制文字标识</span></span><br><span class="line">    TextPainter(</span><br><span class="line">      textAlign: TextAlign.center,</span><br><span class="line">      text: TextSpan(</span><br><span class="line">        text: legend,</span><br><span class="line">        style: TextStyle(</span><br><span class="line">          fontSize: fontSize,</span><br><span class="line">          color: Colors.black,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      textDirection: TextDirection.ltr,</span><br><span class="line">    )</span><br><span class="line">      ..layout(</span><br><span class="line">        minWidth: <span class="number">0</span>,</span><br><span class="line">        maxWidth: size.width,</span><br><span class="line">      )</span><br><span class="line">      ..paint(canvas, offset);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@override</span></span><br><span class="line"><span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">  drawCircle(canvas, size);</span><br><span class="line">  drawLegends(canvas, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-pie-chart/legend.png" width="520" style="width: 260px">
+
+<p>计算文字位置用到的的三角函数是</p>
+<p><img src="./images/flutter-pie-chart/angle.png" alt="angle"></p>
+<h2 id="绘制数据对应的弧形"><a href="#绘制数据对应的弧形" class="headerlink" title="绘制数据对应的弧形"></a>绘制数据对应的弧形</h2><p>在 <code>PeiChartPainter</code> 上添加 <code>drawParts</code> 方法，绘制每个数据对应的弧形。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> drawParts(Canvas canvas, Size size) &#123;</span><br><span class="line">  <span class="keyword">final</span> sw = size.width;</span><br><span class="line">  <span class="keyword">final</span> sh = size.height;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> fontSize = <span class="number">10.0</span>;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> radius = math.min(sw, sh) / <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">final</span> Offset center = Offset(sw / <span class="number">2</span>, sh / <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建弧形依照的矩形</span></span><br><span class="line">  <span class="keyword">final</span> rect = Rect.fromCenter(</span><br><span class="line">    center: center,</span><br><span class="line">    width: radius * <span class="number">2</span>,</span><br><span class="line">    height: radius * <span class="number">2</span>,</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 设置绘制属性</span></span><br><span class="line">  <span class="keyword">final</span> paint = Paint()</span><br><span class="line">    ..strokeWidth = <span class="number">0.0</span></span><br><span class="line">    ..isAntiAlias = <span class="keyword">true</span></span><br><span class="line">    ..style = PaintingStyle.fill;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; parts.length; i++) &#123;</span><br><span class="line">    <span class="keyword">final</span> PiePart <span class="keyword">part</span> = parts[i];</span><br><span class="line">    <span class="comment">// 设置每部分的颜色</span></span><br><span class="line">    paint.color = <span class="keyword">part</span>.color;</span><br><span class="line">    <span class="comment">// 使用 drawArc 方法画出弧形，参数依次是依照的矩形，起始弧度值，占据的弧度值，是否从中心点绘制，绘制属性</span></span><br><span class="line">    canvas.drawArc(rect, <span class="keyword">part</span>.startAngle, <span class="keyword">part</span>.sweepAngle, <span class="keyword">true</span>, paint);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">double</span> data = datas[i];</span><br><span class="line">    <span class="comment">// 计算每部分占比</span></span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">String</span> percent = (data / total * <span class="number">100</span>).toStringAsFixed(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">double</span> radians = <span class="keyword">part</span>.startAngle + <span class="keyword">part</span>.sweepAngle / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 使用三角函数计算文字位置</span></span><br><span class="line">    <span class="built_in">double</span> x = math.cos(radians) * radius / <span class="number">2</span> + sw / <span class="number">2</span> - fontSize * <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">double</span> y = math.sin(radians) * radius / <span class="number">2</span> + sh / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">final</span> Offset offset = Offset(x, y);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 TextPainter 绘制文字标识</span></span><br><span class="line">    TextPainter(</span><br><span class="line">      textAlign: TextAlign.start,</span><br><span class="line">      text: TextSpan(</span><br><span class="line">        text: <span class="string">'<span class="subst">$data</span> <span class="subst">$percent</span>%'</span>,</span><br><span class="line">        style: TextStyle(</span><br><span class="line">          fontSize: fontSize,</span><br><span class="line">          color: Colors.white,</span><br><span class="line">          fontWeight: FontWeight.bold,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      textDirection: TextDirection.ltr,</span><br><span class="line">    )</span><br><span class="line">      ..layout(</span><br><span class="line">        minWidth: <span class="number">0</span>,</span><br><span class="line">        maxWidth: size.width,</span><br><span class="line">      )</span><br><span class="line">      ..paint(canvas, offset);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@override</span></span><br><span class="line"><span class="keyword">void</span> paint(Canvas canvas, Size size) &#123;</span><br><span class="line">  drawCircle(canvas, size);</span><br><span class="line">  drawLegends(canvas, size);</span><br><span class="line">  drawParts(canvas, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="./images/flutter-pie-chart/part.png" width="520" style="width: 260px">
+
+<h2 id="添加动画"><a href="#添加动画" class="headerlink" title="添加动画"></a>添加动画</h2><p>最后给饼图添加一个数据不断增长的动画效果，在 <code>_PieChartState</code> 添加动画的控制器 <code>_controller</code> 和保存动画数据的 <code>_animateDatas</code> 数组。在 <code>initState</code> 中初始化动画控制器和填充 <code>_animateDatas</code> 数组。然后创建两个 <code>double</code> 类型的补间动画，将动画值传给 <code>PeiChartPainter</code> 使用即可。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_PieChartState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">PieChart</span>&gt; <span class="title">with</span> <span class="title">TickerProviderStateMixin</span> </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> _total = <span class="number">0.0</span>;</span><br><span class="line">  AnimationController _controller;</span><br><span class="line">  <span class="built_in">List</span>&lt;<span class="built_in">double</span>&gt; _animateDatas = [];</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">List</span>&lt;PiePart&gt; _parts = &lt;PiePart&gt;[];</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> initState() &#123;</span><br><span class="line">    <span class="keyword">super</span>.initState();</span><br><span class="line">    <span class="comment">// 初始化动画控制器</span></span><br><span class="line">    _controller = AnimationController(</span><br><span class="line">      duration: <span class="built_in">Duration</span>(milliseconds: <span class="number">3000</span>),</span><br><span class="line">      vsync: <span class="keyword">this</span>,</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="built_in">List</span>&lt;<span class="built_in">double</span>&gt; datas = widget.datas;</span><br><span class="line">    <span class="comment">// 计算出数据总和</span></span><br><span class="line">    _total = datas.reduce((a, b) =&gt; a + b);</span><br><span class="line">    <span class="comment">// 设置一个起始变量</span></span><br><span class="line">    <span class="built_in">double</span> startAngle = <span class="number">0.0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; datas.length; i++) &#123;</span><br><span class="line">      <span class="comment">// 填充动画数组</span></span><br><span class="line">      _animateDatas.add(<span class="number">0.0</span>);</span><br><span class="line">      <span class="keyword">final</span> data = datas[i];</span><br><span class="line">      <span class="comment">// 计算出每个数据所占的弧度值</span></span><br><span class="line">      <span class="keyword">final</span> angle = (data / _total) * -math.pi * <span class="number">2</span>;</span><br><span class="line">      PiePart peiPart;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 下一个数据的起始弧度值等于之前的弧度值相加</span></span><br><span class="line">        <span class="built_in">double</span> lastSweepAngle = _parts[i - <span class="number">1</span>].sweepAngle;</span><br><span class="line">        startAngle += lastSweepAngle;</span><br><span class="line">        peiPart = PiePart(startAngle, angle, colors[i]);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 第一个数据的起始弧度为 0.0</span></span><br><span class="line">        peiPart = PiePart(<span class="number">0.0</span>, angle, colors[i]);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 添加到数组中</span></span><br><span class="line">      _parts.add(peiPart);</span><br><span class="line"></span><br><span class="line">      CurvedAnimation curvedAnimation = CurvedAnimation(</span><br><span class="line">        parent: _controller,</span><br><span class="line">        curve: Curves.ease,</span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 创建弧形的补间动画</span></span><br><span class="line">      <span class="keyword">final</span> partTween = Tween&lt;<span class="built_in">double</span>&gt;(begin: <span class="number">0.0</span>, end: peiPart.sweepAngle);</span><br><span class="line">      Animation&lt;<span class="built_in">double</span>&gt; animation = partTween.animate(curvedAnimation);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 创建文字的补间动画</span></span><br><span class="line">      <span class="keyword">final</span> percentTween = Tween&lt;<span class="built_in">double</span>&gt;(begin: <span class="number">0.0</span>, end: data);</span><br><span class="line">      Animation&lt;<span class="built_in">double</span>&gt; percentAnimation =</span><br><span class="line">          percentTween.animate(curvedAnimation);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 在动画启动后不断改变数据值</span></span><br><span class="line">      _controller.addListener(() &#123;</span><br><span class="line">        _parts[i].sweepAngle = animation.value;</span><br><span class="line">        _animateDatas[i] =</span><br><span class="line">            <span class="built_in">double</span>.parse(percentAnimation.value.toStringAsFixed(<span class="number">1</span>));</span><br><span class="line">        setState(() &#123;&#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="comment">// 开始动画</span></span><br><span class="line">      _controller.forward();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Column(</span><br><span class="line">      mainAxisAlignment: MainAxisAlignment.center,</span><br><span class="line">      children: [</span><br><span class="line">        Container(</span><br><span class="line">          width: <span class="number">300</span>,</span><br><span class="line">          height: <span class="number">300</span>,</span><br><span class="line">          child: CustomPaint(</span><br><span class="line">            <span class="comment">// 将数据传给 PeiChartPainter</span></span><br><span class="line">            painter: PeiChartPainter(</span><br><span class="line">              total: _total,</span><br><span class="line">              parts: _parts,</span><br><span class="line">              datas: _animateDatas,</span><br><span class="line">              legends: widget.legends,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">        SizedBox(height: <span class="number">80</span>),</span><br><span class="line">        Container(</span><br><span class="line">          decoration: BoxDecoration(</span><br><span class="line">            color: Colors.blue,</span><br><span class="line">            shape: BoxShape.circle,</span><br><span class="line">          ),</span><br><span class="line">          child: IconButton(</span><br><span class="line">            color: Colors.white,</span><br><span class="line">            icon: Icon(Icons.refresh),</span><br><span class="line">            onPressed: () &#123;</span><br><span class="line">              _controller.reset();</span><br><span class="line">              _controller.forward();</span><br><span class="line">            &#125;,</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ],</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此整个饼状图的绘制就完成了，传入数据即可使用 🎉🎉🎉</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PieChart(</span><br><span class="line">  datas: [<span class="number">60.0</span>, <span class="number">50.0</span>, <span class="number">40.0</span>, <span class="number">30.0</span>, <span class="number">90.0</span>],</span><br><span class="line">  legends: [<span class="string">'一月'</span>, <span class="string">'二月'</span>, <span class="string">'三月'</span>, <span class="string">'四月'</span>, <span class="string">'五月'</span>],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>完整代码地址：<a href="https://github.com/xrr2016/flutter-charts/blob/master/lib/charts/pie_chart.dart" target="_blank" rel="noopener">pie_chart.dart</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文说明了如何使用 Flutter 绘制一个饼状图，使用了一点三角函数，关键点在于计算出每个数据占据整个圆形的弧度值，以及数据的起始弧度值。<br>数值增长的动画效果使用一个 <code>AnimationController</code> 在开始动画后不断的更新绘制使用的数据，在将数据传递给 <code>PeiChartPainter</code> 使用即可实现。</p>
+<h2 id="附言"><a href="#附言" class="headerlink" title="附言"></a>附言</h2><p>准备写一系列关于用 Flutter 画图表的文章，用来分享这方面的知识，这篇文章是这个系列的第二篇，预计 6 篇。</p>
+<ol>
+<li><a href="https://coldstone.fun/post/2020/05/31/flutter-bar-chart/">Flutter 绘制图表（一）柱状图📊</a></li>
+<li><a href="https://coldstone.fun/post/2020/06/09/flutter-pie-chart/">Flutter 绘制图表（二）饼状图🍪</a>（本文）</li>
+<li>Flutter 绘制图表（三）折线图📈</li>
+<li>Flutter 绘制图表（四）雷达图🎯</li>
+<li>Flutter 绘制图表（五）环状图🍩</li>
+<li>Flutter 绘制图表（六）条形图📏</li>
+</ol></section>
+
+  <a
+  class="license-link"
+  rel="license"
+  href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-Hans"
+>
+  <img
+    class="license-img"
+    alt="知识共享许可协议"
+    src="https://img.shields.io/badge/license-BY--NC--SA%204.0-green"
+  />
+</a>
+
+  <section class="article-more">
+    
+    <a
+      class=""
+      href="/post/2020/06/17/leetcode-1014/"
+      title="最好的你"
+    >
+      &larr;&nbsp;最好的你
+    </a>
+     
+    <a
+      class=""
+      href="/post/2020/05/31/flutter-bar-chart/"
+      title="Flutter 绘制图表（一）柱状图📊"
+    >
+      Flutter 绘制图表（一）柱状图📊&nbsp;&rarr;
+    </a>
+    
+  </section>
+</article></main>
+    <footer class="footer container">
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <p class="">
+        共计&#58; 62 篇
+      </p>
+    </li>
+    <li class="sns-list-item">
+      <p class="">
+        <span class=""
+          >总字数&#58; 64.9k</span
+        >
+      </p>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://github.com/xrr2016"
+        >Github</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://juejin.im/user/576666b7207703006b1e0f09"
+        >掘金</a
+      >
+    </li>
+     
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://zhihu.com/people/needforchange/posts"
+        >知乎</a
+      >
+    </li>
+     
+    <li>
+      <a
+        class="sns-list-link"
+        target="_blank"
+        rel="noopener"
+        href="https://leetcode-cn.com/u/coldstone"
+        >力扣</a
+      >
+    </li>
+    
+    <li class="sns-list-item">
+      <a class="rss-link" href="/atom.xml">
+        <svg
+          class=""
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="sns-list">
+    <li class="sns-list-item">
+      <a
+        class="sns-list-link"
+        href="https://colmugx.github.io/blog/"
+        target="_blank"
+        >colmugx</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://kalasearch.cn/blog" target="_blank"
+        >卡拉搜索</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://blog.inmind.ltd/" target="_blank"
+        >Mind's blog</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://oldchen.top" target="_blank"
+        >老晨子</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://www.v2fy.com/" target="_blank"
+        >猫爪导航🐱</a
+      >
+    </li>
+    <li class="sns-list-item">
+      <a class="sns-list-link" href="https://wxsm.space" target="_blank"
+        >wxsm's space</a
+      >
+    </li>
+  </ul>
+</footer>
+
+    <div style="position: relative; z-index: 2147483647">
+  <minymon-body
+    enableFeed="true"
+    enableTalk="true"
+    idsString="MWFkZmVkMjctYmM0Ny00ZjgyLWEwMGQtYjI2ODUyOWUzY2JkLnNBYUd6VlFvajRRV0R0TFVvWUhDQg=="
+    infoTitle="Hi there!"
+    theme="purple"
+  >
+    <minymon-feedback
+      description="Your message will be sent to the owner of this site."
+      mid="1adfed27-bc47-4f82-a00d-b268529e3cbd"
+      theme="purple"
+      uid="sAaGzVQoj4QWDtLUoYHCB"
+    >
+    </minymon-feedback>
+    <minymon-music
+      src="https://firebasestorage.googleapis.com/v0/b/minymon-d541f.appspot.com/o/users%2FsAaGzVQoj4QWDtLUoYHCB%2F1adfed27-bc47-4f82-a00d-b268529e3cbd%2FthemeSong?alt=media&token=cedf9f8b-f6ad-48ba-98be-1b7a13bf817e"
+      theme="purple"
+    >
+    </minymon-music>
+    <minymon-dialog
+      dialog="%5B%7B%22id%22%3A%22jMly1U3yGZZQ6uCBAiIWM%22%2C%22prompt%22%3A%22%u4F60%u662F%u7A0B%u5E8F%u5458%u5417%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22bOOpH7tBmdRyqh5h7fAgP%22%2C%22response%22%3A%22Cool%uFF01%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%2276Py1lpgPaqoOmu4ImHoX%22%2C%22response%22%3A%22Nice%22%2C%22nextPromptId%22%3Anull%7D%2C%7B%22id%22%3A%22o8s0P-LKdQPjOXz_Qz9X3%22%2C%22response%22%3A%22%u68D2%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%2C%7B%22id%22%3A%22eiMReIgrC0fqbZdecoJFf%22%2C%22prompt%22%3A%22%u6211%u7684%u5973%u670B%u53CB%u662F%u8C01%uFF1F%22%2C%22responses%22%3A%5B%7B%22id%22%3A%22OE0q2qJGP9tSdBW5vP71H%22%2C%22response%22%3A%22%u54C8%u54C8%u54C8%22%2C%22nextPromptId%22%3Anull%7D%5D%7D%5D"
+      theme="purple"
+    >
+    </minymon-dialog>
+  </minymon-body>
+</div>
+
+    <!--
+ Copyright (c) 2021 Cold Stone
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+<script src="/index.js"></script>
+
+  </body>
+</html>
